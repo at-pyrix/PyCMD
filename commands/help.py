@@ -26,10 +26,7 @@ with open('json/config.json', 'r') as f:
     config = json.load(f)
     f.close()
 
-__setup_done__ = config['$setup']
-
-pc_name = os.environ['COMPUTERNAME']
-user_name = os.getlogin()
+__setup_done__ = config['is_setup']
 
 color_enabled = True
 
@@ -58,26 +55,26 @@ else:
     print(f"""
 {fc.LIGHTWHITE_EX}USAGE{fc.RESET}:
 
-{fc.CYAN}# {user_name} {fc.LIGHTBLACK_EX}@{fc.LIGHTGREEN_EX} {pc_name} {fc.LIGHTBLACK_EX}in{fc.LIGHTYELLOW_EX} ~{fc.RESET}
-{fc.RED}${fc.YELLOW} pycmd {fc.RESET} <command> {fc.GREEN}"<argument>"{fc.LIGHTBLACK_EX} <flags> {fc.RESET}
+{fc.RED}${fc.YELLOW} pycmd {fc.BLUE} <command> {fc.GREEN}<argument>{fc.LIGHTBLACK_EX} <flags> {fc.RESET}
 """)
 
     # TABLE OF COMMANDS
+    # DON'T TOUCH, IT WORKS
     file = open('json/commands.json', 'r')
     commands_data = json.load(file)
 
-    print(fc.CYAN + "┌" + "─"*27 + "┬" + "─"*46 + "┐")
-    print(f"{fc.CYAN}│{fc.YELLOW}{'Commands'.center(14, ' ')}{fc.CYAN}{' │'.center(25, ' ')}{fc.YELLOW}{'   Description'.center(15, ' ')}{fc.CYAN}{' '*20}│")
+    print(fc.CYAN + "┌─" + "─"*27 + "┬" + "─"*44 + "─┐")
+    print(f"{fc.CYAN}│{fc.YELLOW}{'Commands'.center(28, ' ')}{fc.CYAN}│{fc.YELLOW}{'Description'.center(42, ' ')}{fc.CYAN}{' '*3}│")
 
-    print(fc.CYAN + "├" + "─"*27 + "┴" + "─"*46 + "┤")
+    print(fc.CYAN + "└─" + "─"*27 + "┴" + "─"*44 + "─┘")
+    print(fc.BLACK + "┌─" + "─"*27 + "┬" + "─"*44 + "─┐")
     for i in commands_data:
-        name_center = i['name'].center(15, ' ')
-        space_for_dash_left = " "*12
+        name_center = i['name'].center(27, ' ')
+        space_for_dash_left = " "
         print(
-            f"{fc.LIGHTBLACK_EX}│{fc.LIGHTBLUE_EX}{name_center}{space_for_dash_left}{fc.LIGHTBLACK_EX}:  {fc.GREEN}{i['description'].center(39, ' ')}     {fc.LIGHTBLACK_EX}│")
-    print(fc.LIGHTBLACK_EX + "└" + "─"*74 + "┘")
-
+            f"{fc.BLACK}│{fc.LIGHTBLUE_EX}{name_center}{space_for_dash_left}{fc.BLACK}│  {fc.GREEN}{i['description'].center(39, ' ')}    {fc.BLACK}│")
+    print(fc.BLACK + "└─" + "─"*27 + "┴" + "─"*44 + "─┘")
 
     print("\nFor more information on a specific command, type:")
-    print(f"{fc.LIGHTRED_EX}$ {fc.YELLOW}pycmd {fc.LIGHTBLUE_EX}<command>{fc.LIGHTBLACK_EX} --help")
+    print(f"{fc.LIGHTRED_EX}$ {fc.YELLOW}pycmd {fc.LIGHTBLUE_EX}<command>{fc.BLACK} --help")
 ########################

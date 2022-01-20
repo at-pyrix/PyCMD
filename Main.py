@@ -9,24 +9,23 @@ init(autoreset=True)
 
 os.chdir(os.path.dirname(os.path.realpath(__file__)))
 
-
 def help(command: str):
     file = open('json/commands.json', 'r')
     data = json.load(file)
     for i in data:
         if i['name'] == command:
-            print(f'\n\nHelp for {fc.LIGHTWHITE_EX}{command}\n')
+            print(f'\n\nHelp for {fc.CYAN}{command}\n')
             print(
-                f'{fc.LIGHTMAGENTA_EX}Description {fc.BLACK}: {fc.CYAN}{i["description"]}')
+                f'{fc.LIGHTWHITE_EX}{i["description"]}\n\n')
             print(
-                f'{fc.LIGHTMAGENTA_EX}Usage       {fc.BLACK}: {fc.YELLOW}{i["usage"]}')
+                f'Usage{fc.BLACK}: {fc.YELLOW}{i["usage"]}\n')
             try:
                 print(
-                    f'{fc.LIGHTMAGENTA_EX}Example     {fc.BLACK}: {fc.LIGHTBLUE_EX}{i["example"]}')
+                    f'Example{fc.BLACK}: {fc.LIGHTBLUE_EX}{i["example"]}\n')
                 print(
-                    f'{fc.LIGHTMAGENTA_EX}Parameters  {fc.BLACK}: {fc.GREEN}{", ".join(i["parameters"])}')
+                    f'Parameters{fc.BLACK}: {fc.GREEN}{", ".join(i["parameters"])}\n')
                 print(
-                    f'{fc.LIGHTMAGENTA_EX}Flags       {fc.BLACK}: {fc.LIGHTBLACK_EX}{i["flags"]}')
+                    f'Flags{fc.BLACK}: {fc.LIGHTBLACK_EX}{i["flags"]}\n')
             except KeyError:
                 pass
 

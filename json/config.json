@@ -1,9 +1,6 @@
 {
-    "$setup": false,
-    "config": {
-        "python_projects_path": ""
-    },
-    "python_projects_path": "C:\\Programming\\Python_Projects",
-    "java_projects_path": "C:\\Programming\\Java_Projects",
-    "web_projects_path": "C:\\Programming\\Web_Projects"
+    "is_setup": false,
+    "projects": {
+        "python_projects_path": "C:\\Programming\\Python_Projects"
+    }
 }

@@ -10,6 +10,15 @@ import sys
 
 # checks if it is a file or a folder and lists the folder
 
+def get_env(property):
+    env_file = open(".env", "r")
+    secrets = env_file.read()
+    env_file.close()
+    env_dict = {}
+    for i in secrets.splitlines():
+        key, value = i.split("=")
+        env_dict[key] = value.replace('"', '').strip()
+    return env_dict[property]
 
 def listdir(path):
     listdir_path = os.listdir(path)
@@ -25,7 +34,7 @@ def listdir(path):
 
 
 if "repo" in sys.argv[1] or "git" in sys.argv[1]:
-    g = Github(token)
+    g = Github(get_env('GITHUB_TOKEN'))
     user = g.get_user()
     login = user.login
 
