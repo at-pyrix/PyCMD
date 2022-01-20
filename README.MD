@@ -14,7 +14,7 @@ Or if you're smart you can make it work on other platforms ;​)
 - [x] Update the Cli (use »)
 - [x] Change colors
 - [x] Update CLI help command
-- [x] Other Language Support
+- [ ] Other Language Support
 - [ ] New Commands
 - [ ] Simplify Commands
 - [ ] Push to Github

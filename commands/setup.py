@@ -230,3 +230,6 @@ with open(json_location, 'w') as f:
 print(fc.CYAN + '\n\nSetup complete!')
 print('\n' + fc.GREEN + "We've (I mean i've) saved everything to the config ;)")
 print("Here, have some bread: 🍞👍")
+
+
+# TODO: Add support for other languages
