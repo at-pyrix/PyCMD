@@ -23,7 +23,7 @@ Or if you're smart you can make it work on other platforms ;​)
 - Clone the repo:
 
   ```console
-  $ git clone https://www.github.com/Yasho/PyCMD
+  git clone https://www.github.com/Yasho/PyCMD
   ```
 <details>
 <summary>
