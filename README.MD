@@ -22,8 +22,8 @@ Or if you're smart you can make it work on other platforms ;​)
 ## Setup:
 - Clone the repo:
 
-  ```powershell
-  $ git clone https://www.github.com/Yasho/PyCMD
+  ```console
+  git clone https://www.github.com/Yasho/PyCMD
   ```
 <details>
 <summary>
