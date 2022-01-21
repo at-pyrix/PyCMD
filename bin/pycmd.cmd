@@ -1,2 +1,3 @@
 @echo off
-python %0..\..\..\Main.py %*
+pushd %~dp0..\
+python %CD%\Main.py %*

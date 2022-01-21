@@ -7,7 +7,7 @@ init(autoreset=True)
 
 os.chdir(os.path.dirname(os.path.realpath(__file__ + "/..")))
 
-colors = [fc.BLACK, fc.RED, fc.GREEN, fc.YELLOW, fc.BLUE, fc.MAGENTA, fc.CYAN, fc.WHITE,
+colors = [fc.LIGHTBLACK_EX, fc.RED, fc.GREEN, fc.YELLOW, fc.BLUE, fc.MAGENTA, fc.CYAN, fc.WHITE,
           fc.RESET,
           fc.LIGHTBLACK_EX, fc.LIGHTRED_EX, fc.LIGHTGREEN_EX, fc.LIGHTYELLOW_EX, fc.LIGHTBLUE_EX, fc.LIGHTMAGENTA_EX, fc.LIGHTCYAN_EX, fc.LIGHTWHITE_EX
           ]
@@ -41,7 +41,7 @@ It's {fc.LIGHTGREEN_EX}Free{fc.RESET} and {fc.LIGHTGREEN_EX}Open Source{fc.RESET
 
 Github: {fc.LIGHTBLUE_EX}https://www.github.com/Yasho022/pycmd{fc.RESET}
 
-{st.DIM}We'll walk you through the process of setting up your first project.{fc.RESET}{st.RESET_ALL}
+{st.DIM}We'll walk you through the process of setting up PYCMD environment.{fc.RESET}{st.RESET_ALL}
 
 {fc.LIGHTGREEN_EX}If that looks good to you, start by typing:
 {fc.LIGHTRED_EX}$ {fc.YELLOW}pycmd {fc.RESET}setup{fc.RESET}
@@ -55,7 +55,7 @@ else:
     print(f"""
 {fc.LIGHTWHITE_EX}USAGE{fc.RESET}:
 
-{fc.RED}${fc.YELLOW} pycmd {fc.BLUE} <command> {fc.GREEN}<argument>{fc.LIGHTBLACK_EX} <flags> {fc.RESET}
+{fc.RED}${fc.YELLOW} pycmd {fc.LIGHTBLUE_EX} <command> {fc.GREEN}<argument>{fc.LIGHTBLACK_EX} <flags> {fc.RESET}
 """)
 
     # TABLE OF COMMANDS
@@ -67,14 +67,14 @@ else:
     print(f"{fc.CYAN}│{fc.YELLOW}{'Commands'.center(28, ' ')}{fc.CYAN}│{fc.YELLOW}{'Description'.center(42, ' ')}{fc.CYAN}{' '*3}│")
 
     print(fc.CYAN + "└─" + "─"*27 + "┴" + "─"*44 + "─┘")
-    print(fc.BLACK + "┌─" + "─"*27 + "┬" + "─"*44 + "─┐")
+    print(fc.LIGHTBLACK_EX + "┌─" + "─"*27 + "┬" + "─"*44 + "─┐")
     for i in commands_data:
         name_center = i['name'].center(27, ' ')
         space_for_dash_left = " "
         print(
-            f"{fc.BLACK}│{fc.LIGHTBLUE_EX}{name_center}{space_for_dash_left}{fc.BLACK}│  {fc.GREEN}{i['description'].center(39, ' ')}    {fc.BLACK}│")
-    print(fc.BLACK + "└─" + "─"*27 + "┴" + "─"*44 + "─┘")
+            f"{fc.LIGHTBLACK_EX}│{fc.LIGHTBLUE_EX}{name_center}{space_for_dash_left}{fc.LIGHTBLACK_EX}│  {fc.GREEN}{i['description'].center(39, ' ')}    {fc.LIGHTBLACK_EX}│")
+    print(fc.LIGHTBLACK_EX + "└─" + "─"*27 + "┴" + "─"*44 + "─┘")
 
     print("\nFor more information on a specific command, type:")
-    print(f"{fc.LIGHTRED_EX}$ {fc.YELLOW}pycmd {fc.LIGHTBLUE_EX}<command>{fc.BLACK} --help")
+    print(f"{fc.LIGHTRED_EX}$ {fc.YELLOW}pycmd {fc.LIGHTBLUE_EX}<command>{fc.LIGHTBLACK_EX} --help")
 ########################

@@ -77,7 +77,10 @@ if len(sys.argv) > 1:
     parameter = sys.argv[2] if len(sys.argv) > 2 else "."
     flags = [
         f"{flag.replace('-', '')}" for flag in sys.argv if flag.startswith("-")]
-    execute(function, parameter, flags)
+    try:
+        execute(function, parameter, flags)
+    except KeyboardInterrupt:
+        pass
 
 else:
     os.system('python commands/help.py')

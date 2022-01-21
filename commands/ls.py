@@ -82,10 +82,10 @@ if "repo" in sys.argv[1] or "git" in sys.argv[1]:
 
     for repo in repos_pub:
         time.sleep(0.1)
-        print(fc.BLACK+"• "+fc.RESET+repo)
+        print(fc.LIGHTBLACK_EX+"• "+fc.RESET+repo)
     for repo in repos_priv:
         time.sleep(0.1)
-        print(f"{fc.BLACK}• {fc.LIGHTBLACK_EX}{repo}{fc.RESET} ")
+        print(f"{fc.LIGHTBLACK_EX}• {fc.LIGHTBLACK_EX}{repo}{fc.RESET} ")
 
     print(fc.RESET)
 
@@ -99,9 +99,9 @@ elif "py" in sys.argv[1]:
             time.sleep(0.1)
 
             if ".git" in root:
-                print(f"{fc.BLACK}• {fc.LIGHTGREEN_EX}{item}{fc.RESET}")
+                print(f"{fc.LIGHTBLACK_EX}• {fc.LIGHTGREEN_EX}{item}{fc.RESET}")
             else:
-                print(fc.BLACK+"• " + fc.RESET + item + fc.RESET)
+                print(fc.LIGHTBLACK_EX+"• " + fc.RESET + item + fc.RESET)
     else:
         print(
             f"{fc.LIGHTRED_EX}You have no Python Projects currently{fc.LIGHTWHITE_EX}")
@@ -119,9 +119,9 @@ elif sys.argv[1] == "js" or "javascript" in sys.argv[1]:
             time.sleep(0.1)
 
             if ".git" in root:
-                print(f"{fc.BLACK}• {fc.LIGHTGREEN_EX}{item}{fc.RESET}")
+                print(f"{fc.LIGHTBLACK_EX}• {fc.LIGHTGREEN_EX}{item}{fc.RESET}")
             else:
-                print(fc.BLACK+"• " + fc.RESET + item + fc.RESET)
+                print(fc.LIGHTBLACK_EX+"• " + fc.RESET + item + fc.RESET)
     else:
         print(
             f"{fc.LIGHTRED_EX}You have no Javascript Projects currently{fc.LIGHTWHITE_EX}")
@@ -135,7 +135,7 @@ elif "java" in sys.argv[1]:
         time.sleep(0.5)
         for items in list_java:
             time.sleep(0.1)
-            print(fc.BLACK+"• "+fc.RESET + items)
+            print(fc.LIGHTBLACK_EX+"• "+fc.RESET + items)
     else:
         print(
             f"{fc.LIGHTGREEN_EX}You have no Java Projects currently{fc.LIGHTWHITE_EX}")
@@ -152,9 +152,9 @@ elif "web" in sys.argv[1] or "html" in sys.argv[1]:
             time.sleep(0.1)
 
             if ".git" in root:
-                print(f"{fc.BLACK}• {fc.LIGHTGREEN_EX}{item}{fc.RESET}")
+                print(f"{fc.LIGHTBLACK_EX}• {fc.LIGHTGREEN_EX}{item}{fc.RESET}")
             else:
-                print(fc.BLACK+"• " + fc.RESET + item + fc.RESET)
+                print(fc.LIGHTBLACK_EX+"• " + fc.RESET + item + fc.RESET)
     else:
         print(f"{fc.LIGHTRED_EX}You have no Web Projects currently{fc.LIGHTWHITE_EX}")
     print(fc.RESET)

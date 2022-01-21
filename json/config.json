@@ -1,6 +1,9 @@
 {
-    "is_setup": false,
+    "is_setup": true,
     "projects": {
-        "python_projects_path": "C:\\Programming\\Python_Projects"
+        "python_projects_path": "C:\\Programming\\Python_Projects",
+        "java_projects_path": "C:\\Programming\\Java",
+        "node.js_projects_path": "C:\\Programming\\Javascript",
+        "web_projects_path": "C:\\Programming\\Web"
     }
 }
