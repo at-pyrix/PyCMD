@@ -45,6 +45,7 @@ PYCMD only supports `Windows` at the moment.<br>
 </ul>
 
 - Run the `pycmd setup` command and follow the on-screen instructions.
+
   ```console
   pycmd setup
   ```
