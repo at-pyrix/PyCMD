@@ -1,21 +1,24 @@
-<h1 align=center> PyCMD - A Command Line interface tool for Python</h1>
+<h1 align=center> PyCMD - A CLI tool</h1>
 
-## Contents 📃
+## Contents
 - [About](#description)
-- [Setup](#setup-%EF%B8%8F)
+- [Setup](#installation)
+- [PyCMD Commands](#commands)
 - [How can you help?](#contribute-)
 - [License](#license-)
+- [Frequently Asked Questions](#faqs)
 ## Description
 
 
-**PyCmd is a command-line interface tool to help you manage your projects. It is free, open source and easy to use.**
+**PyCmd is a command-line interface tool to help you manage your projects. It saves you a lot of clicks. If that sounds interesting, [Setup PyCMD](#installation)**
+
 
 PYCMD only supports `Windows` at the moment.<br>
 `Python 3.6+` is required.<br>
 
 [*Or if you're smart you can make it work on unix platforms ;​)*](https://www.github.com/Yasho022/Pycmd/fork)
 
-## Setup ⚙️:
+## Installation:
 - Clone the repo:
 
   ```console
@@ -47,6 +50,19 @@ s
   pycmd setup
   ```
 
+## Commands
+
+| Command | Description |
+|---------|-------------|
+| `pycmd` | Run the PyCMD command line interface. |
+| `pycmd help` | Display help information. |
+| `pycmd setup` | Setup PyCMD. |
+| `pycmd ls` | List all projects. |
+| `pycmd new` | Create a new project. |
+| `pycmd open` | Open a project. |
+| `pycmd rm` | Remove a project. |
+| `pycmd create` | Create a new project + initialize a Git repository. |
+
 
 ## Contribute 💖
 
@@ -62,6 +78,7 @@ Here are some ways you can help:
 - [ ] Other Language Support
 - [ ] New Commands
 - [ ] Simplify Commands
+- [ ] `PYCMD Update` command which will merge the changes of a new release into your current branch. 
 
 pls tell me about bugs in the code. I don't even use light mode.
 
@@ -99,6 +116,36 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 ```
+
+## FAQs:
+
+- Why did you name it **Py**CMD? 
+>  ¯\\_\(ツ\)\_\/¯, but I think it's an **ok** name. Also `Py` represents the Python language in which PYCMD was written. Not the best name, but okay. 
+
+- How do you use PyCMD?
+> You can use the `pycmd` command. It will help you to get started.
+
+- Why should I use PyCMD?
+> PyCMD saves you a lot of time, you can use it to manage your projects if they are messy or if you want to make a lot of changes in short time. Not only that but also it will help you to make your projects more readable and maintainable.
+
+- What are the Pros and Cons of PyCMD?
+
+> | Pros | Cons |
+> | ---- | ---- |
+> | Easy to use | Might be an overkill |
+> | Saves Time | Compaitable with Windows only |
+> | Generates Boiler Plate | |
+> | Manages GIT | |
+> | Light - Doesn't take too much space |
+ 
+
+
+
+- Does PyCMD collect any user data?
+> No, PyCMD doesn't collect any user data. It stores the configuration in a file `config.json`.
+
+- How do you contribute to PyCMD?
+> You can contribute to PyCMD by [opening an issue](https://www.github.com/Yasho022/PyCMD/issues) or [forking](https://www.github.com/Yasho022/PyCMD/fork). 
 
 ---
 
