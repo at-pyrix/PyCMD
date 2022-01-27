@@ -4,7 +4,7 @@
 - [About](#description)
 - [Setup](#setup-%EF%B8%8F)
 - [How can you help?](#contribute-)
-
+- [License](#license-)
 ## Description
 
 
@@ -42,7 +42,7 @@ PYCMD only supports `Windows` at the moment.<br>
 </ul>
 
 - Run the `pycmd setup` command and follow the on-screen instructions.
-
+s
   ```console
   pycmd setup
   ```
@@ -50,13 +50,57 @@ PYCMD only supports `Windows` at the moment.<br>
 
 ## Contribute 💖
 
-How can I contribute? _even if don't want to \*__evil laugh intensifies__\*_
-- [x] Improve Readme
-- [x] Make it windows compatible
-- [x] Update CLI help command
+#### How do I contribute?
+First of all, thank you mr.Handsome for contributing to PyCMD. You're awesome! ;​)
+<!-- btw this (";​)") is zero-width space -->
+
+Here are some ways you can help:
+
+- [x]  Readme
+- [ ] Update CLI help command
+- [ ] Make it work on other platforms
 - [ ] Other Language Support
 - [ ] New Commands
 - [ ] Simplify Commands
 
+pls tell me about bugs in the code. I don't even use light mode.
+
+
+### Contributers:
+._.
+
+Absolutely no one.
+
+
+## License 🔑
+PYCMD is licensed under the [MIT license](https://www.opensource.org/licenses/mit-license.php).
+
+```license
+MIT License
+
+Copyright (c) 2022 Yasho022
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (PYCMD), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+```
+
 ---
+
+
 
