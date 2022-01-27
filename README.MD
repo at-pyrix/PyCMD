@@ -22,7 +22,7 @@ PYCMD only supports `Windows` at the moment.<br>
 - Clone the repo:
 
   ```console
-  git clone https://www.github.com/Yasho/PyCMD
+  git clone https://www.github.com/Yasho/PyCMD.git
   ```
 <ul><li>
 <details>
