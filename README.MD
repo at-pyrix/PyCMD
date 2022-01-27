@@ -2,8 +2,8 @@
 
 ## Contents 📃
 - [About](#description)
-- [Setup](#setup-⚙️)
-- [How can you help?](#contribute-💖)
+- [Setup](#setup-)
+- [How can you help?](#contribute-)
 
 ## Description
 
