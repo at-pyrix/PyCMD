@@ -86,7 +86,7 @@ pls tell me about bugs in the code. I don't even use light mode.
 ### Contributers:
 ._.
 
-Absolutely no one.
+Hey look, you could be the first one!
 
 
 ## License 🔑
