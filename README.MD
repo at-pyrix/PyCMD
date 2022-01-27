@@ -2,7 +2,7 @@
 
 ## Contents 📃
 - [About](#description)
-- [Setup](#setup-)
+- [Setup](#setup-%EF%B8%8F)
 - [How can you help?](#contribute-)
 
 ## Description
