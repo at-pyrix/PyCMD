@@ -9,6 +9,23 @@ init(autoreset=True)
 
 os.chdir(os.path.dirname(os.path.realpath(__file__)))
 
+
+def argparse(args: list):
+    function = args[1] if not args[1].startswith('-') else ""
+    parameter = ""
+    flags = []
+    for i in args[1:]:
+        if i.startswith("--"):
+            flags.append(i[1:])
+        elif i.startswith("-"):
+            flags.append(i)
+        else:
+            parameter = i if i != function else "."
+        args.pop(args.index(i))
+
+    return function, parameter, flags
+
+
 def help(command: str):
     file = open('json/commands.json', 'r')
     data = json.load(file)
@@ -38,13 +55,15 @@ def autocorrect(word, word_list, tolerance=0.4):
 
 
 def execute(function: str, parameter: str, flags: list):
-    if "help" in flags:
-        if function == "--help":
-            os.system("python commands/help.py help " + " ".join(flags))
-            return 0
-        else:
-            help(function)
-            return 0
+    # TODO: FIX THIS
+    
+    if not function:
+        os.system("python commands/help.py help " + " ".join(flags))
+        return 0
+    
+    if "-help" in flags or "-h" in flags:
+        help(function)
+        return 0
 
     if "help" in function:
         os.system("python commands/help.py help " + " ".join(flags))
@@ -73,10 +92,7 @@ def execute(function: str, parameter: str, flags: list):
 
 
 if len(sys.argv) > 1:
-    function = sys.argv[1] if len(sys.argv) > 1 else None
-    parameter = sys.argv[2] if len(sys.argv) > 2 else "."
-    flags = [
-        f"{flag.replace('-', '')}" for flag in sys.argv if flag.startswith("-")]
+    function, parameter, flags = argparse(sys.argv)
     try:
         execute(function, parameter, flags)
     except KeyboardInterrupt:

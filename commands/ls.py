@@ -10,7 +10,7 @@ import sys
 
 # checks if it is a file or a folder and lists the folder
 
-def get_env(property):
+def get_env(key: str) -> str:
     env_file = open(".env", "r")
     secrets = env_file.read()
     env_file.close()
@@ -18,7 +18,7 @@ def get_env(property):
     for i in secrets.splitlines():
         key, value = i.split("=")
         env_dict[key] = value.replace('"', '').strip()
-    return env_dict[property]
+    return env_dict[key]
 
 def listdir(path):
     listdir_path = os.listdir(path)

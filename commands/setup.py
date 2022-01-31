@@ -1,53 +1,44 @@
-from colorama import Fore as fc, Back as bk, Style as st, init
+from colorama import Fore as fc, Style as st, init
 import wx
+import requests
 from difflib import SequenceMatcher
 import msvcrt
+import requests
 from time import sleep
 import sys
 import os
 import json
 init(autoreset=True)
 
+# TODO: Add support for other languages
 
-def autocorrect(word, word_list, tolerance=0.6):
-    for filter_word in word_list:
-        if SequenceMatcher(a=word, b=filter_word).ratio() > tolerance:
-            return filter_word
-    return None
+config = {"is_setup": True, "projects": {}}
 
 
-def get_path():
-    app = wx.App(None)
-    style = wx.FD_OPEN | wx.FD_FILE_MUST_EXIST
-    dialog = wx.DirDialog(None, 'Open', style=style)
-    if dialog.ShowModal() == wx.ID_OK:
-        path = dialog.GetPath()
-    else:
-        path = None
-    dialog.Destroy()
-    return path
+def save_env(key: str, value: str) -> None:
+    with open('.env', 'r') as f:
+        lines = f.readlines()
+        f.close()
+
+    with open('.env', 'w') as f:
+        key_found = False
+        for line in lines:
+            if key in line:
+                f.write(f'{key}="{value}"\n')
+                key_found = True
+            else:
+                f.write(line)
+        if not key_found:
+            f.write(f'{key}="{value}"\n')
+        f.close()
 
 
-def getpass(prompt=''):
-    p_s = ''
-    proxy_string = ['​'] * 40
-    while True:
-        sys.stdout.write('\x0D' + prompt + ''.join(proxy_string))
-        c = msvcrt.getch()
-        if c == b'\r':
-            break
-        elif c == b'\x08':
-            p_s = p_s[:-1]
-            proxy_string[len(p_s)] = " "
-        else:
-            proxy_string[len(p_s)] = "*"
-            p_s += c.decode()
-
-    sys.stdout.write('\n')
-    return p_s
-
-try:
+# Sorry for this:
+def setup():
     print(f"\n\n{fc.CYAN}PYCMD Setup")
+
+# I know this is super ugly, but I'm sticking with it for now.
+# Really sorry
 
     print(f"""
 This script will help you to setup your PYCMD environment.
@@ -58,17 +49,19 @@ to get the list of commands and usage.
 
 You can change these settings anytime.
 
-{fc.LIGHTRED_EX}Ctrl^C{fc.LIGHTWHITE_EX} to exit.
+{fc.LIGHTBLACK_EX}Ctrl^C to exit.
     """)
 
-    print("── Press any key to continue ──", end="")
-    msvcrt.getch()
+    print("── Press any key to continue ──", end="\r")
+    if msvcrt.getch() == b'\x03':
+        raise KeyboardInterrupt
 
-    print("\r" + fc.LIGHTWHITE_EX + "Which programming languages do you work with?")
+    print("\r" + fc.LIGHTWHITE_EX +
+          "Which programming languages do you work with?")
     print(fc.LIGHTBLACK_EX + "Seperate multiple answers with a comma (,)\n")
 
     languages_supported = ['Python', 'C++',
-                        'C#', 'Java', 'Go', 'Rust', 'Node.js', 'TypeScript', 'Web (HTML, CSS, JS)', 'Other']
+                           'C#', 'Java', 'Go', 'Rust', 'Node.js', 'TypeScript', 'Web (HTML, CSS, JS)', 'Other']
 
     for i in languages_supported:
         print(f"{fc.LIGHTBLACK_EX}•{fc.LIGHTBLUE_EX} {i}")
@@ -107,7 +100,7 @@ You can change these settings anytime.
 
     if languages_got == ['Other']:
         print("\r" + fc.LIGHTWHITE_EX +
-            "What programming language do you work with?")
+              "What programming language do you work with?")
         selection = input(fc.CYAN + "» " + fc.GREEN)
         languages_got = [selection]
 
@@ -120,25 +113,23 @@ You can change these settings anytime.
         exit(1)
 
     else:
-        del languages_supported
         print(fc.GREEN + ', '.join(languages_got))
-
-    config = {"is_setup": True, "projects": {}}
 
     print(fc.LIGHTWHITE_EX + "\nDo you organize your projects in folders? (Y/n)")
     response = input(fc.CYAN + "» " + fc.RESET).lower()
+
     if response == "y" or response == "yes":
         print(fc.GREEN + "\nAwesome! Let's set up your project folders.")
         print(fc.LIGHTBLACK_EX + "─" * 58)
         print(fc.LIGHTBLACK_EX +
-            "Select the folder from the popup\n(maybe it's already open but not in focus)")
+              "Select the folder from the popup\n(maybe it's already open but not in focus)")
 
         try:
             for i in languages_got:
                 if "Web" in i:
                     i = "Web"
                 print(fc.LIGHTWHITE_EX +
-                    f"\nWhere do you save all your {i} projects?")
+                      f"\nWhere do you save all your {i} projects?")
                 print(fc.CYAN + "» " + fc.GREEN, end="\r")
                 path = get_path()
                 print(fc.CYAN + "» " + fc.GREEN + path)
@@ -146,16 +137,16 @@ You can change these settings anytime.
                     i = "web"
                 config['projects'][f'{i.lower()}_projects_path'] = path
         except:
-            print(st.DIM + fc.CYAN + "» " + st.RESET_ALL +
-                fc.RED + "You didn't select a folder :/")
+            print(fc.CYAN + "» " +
+                  fc.RED + "You didn't select a folder :/")
             exit(1)
 
     else:
         print("\nWe got you covered! We'll create the folders for you.")
         print(fc.LIGHTBLACK_EX +
-            "Select the folder from the popup\n(maybe it's already open but not in focus)")
+              "Select the folder from the popup\n(maybe it's already open but not in focus)")
         print(fc.LIGHTWHITE_EX +
-            "\nAlright, just tell us your root folder where you save all your projects.")
+              "\nAlright, just tell us your root folder where you save all your projects.")
         print(fc.CYAN + "» " + fc.GREEN, end="\r")
         root_folder = get_path()
 
@@ -164,7 +155,7 @@ You can change these settings anytime.
             print(
                 fc.GREEN + "\nNevermind, we'll do that too. We'll just use the PYCMD/Projects directory.")
             print(fc.LIGHTWHITE_EX +
-                "\nIf you're okay with that, press [Y] to continue.")
+                  "\nIf you're okay with that, press [Y] to continue.")
             key = msvcrt.getch()
             if key.lower() == b'y':
                 os.mkdir('Projects')
@@ -190,21 +181,58 @@ You can change these settings anytime.
             print(
                 f"{fc.MAGENTA}Created folder for {fc.YELLOW}{i} Projects{fc.LIGHTBLACK_EX}:{fc.RESET} {folder}")
 
-    print("\n\n\nOne more step before we complete the setup.")
-    print('This is so PYCMD can initialize and delete git repositories.\n\n')
-    print(fc.LIGHTWHITE_EX +
-        "Get your GitHub token from https://github.com/settings/tokens/new")
+    print("\nOne more step before we complete the setup.")
+
+
+def git_setup():
+    print("\n" + fc.GREEN + "GIT Setup\n\n")
+
+    valid = False
+
+    for i in range(1, 4):
+        print(fc.LIGHTWHITE_EX +
+              "What is your GitHub username ?")
+        username = input(fc.CYAN + "» " + fc.GREEN)
+        print(fc.RESET)
+
+        url = f"https://api.github.com/users/{username}"
+        response = requests.get(url)
+        json = response.json()
+
+        if 'login' in json:
+            print(
+                fc.GREEN + "\nAwesome! We'll use " + fc.BLUE + username + fc.GREEN + " as your GitHub username.")
+            valid = True
+            break
+
+        elif 'message' in json and json['message'] == 'Not Found':
+            if i == 3:
+                print('\n' + fc.RED + 'Too many attempts. Exiting.')
+                break
+            print("Whoops! Looks like you entered an invalid username.")
+            print(f'Retrying... {i}/3\n')
+
+        else:
+            print(json)
+            exit(1)
+
+    if not valid:
+        exit(1)
+
+    print('\nThis is so PYCMD can initialize and delete git repositories.\n')
+    print(
+        f"Get your GitHub token from {fc.BLUE}https://github.com/settings/tokens/new")
     print("and give it the following scopes:\n")
 
     scopes = {'repo': ['repo:status', 'repo_deployment', 'public_repo',
-                    'repo:invite', 'security_events'], 'delete_repo': ['delete_repo']}
+                       'repo:invite', 'security_events'], 'delete_repo': ['delete_repo']}
 
     for i in scopes:
         print(
             f"{fc.LIGHTBLACK_EX}•{fc.LIGHTBLUE_EX} {i}{fc.LIGHTBLACK_EX}: {fc.GREEN}{', '.join(scopes[i])}")
     print('\nSet the expiration date to atleast a month or you will be asked to re-authenticate.')
     print('You can also do this in the .env file.')
-    print('\n' + fc.LIGHTWHITE_EX + "Press [Y] to continue.")
+    print('\n' + fc.LIGHTWHITE_EX + "Press [Y] to continue.", end="\r")
     response = msvcrt.getch().decode()
 
     if response.lower() == 'n':
@@ -213,31 +241,91 @@ You can change these settings anytime.
     else:
         print(fc.LIGHTWHITE_EX + '\nWhat is your GitHub token?')
         github_token = getpass(fc.CYAN + "» " + fc.GREEN)
-        with open('.env', 'w') as f:
-            f.write(f'GITHUB_TOKEN={github_token}')
-            f.close()
+
+        headers = {
+            'Authorization': f'token {github_token}',
+        }
+
+        response = requests.head(
+            f'https://api.github.com/users/{username}', headers=headers)
+        token_valid = response.status_code == 200
+
+        if token_valid:
+            print(
+                fc.GREEN + '\nGreat! We\'ll use this token to authenticate with GitHub.\n')
+
+            save_env('GITHUB_USERNAME', username)
+            save_env('GITHUB_TOKEN', github_token)
+        else:
+            print('\n' + fc.RED + 'Invalid token. Git Setup Incomplete')
 
 
-    # ----Finishing the setup----
+def autocorrect(word, word_list, tolerance=0.6):
+    for filter_word in word_list:
+        if SequenceMatcher(a=word, b=filter_word).ratio() > tolerance:
+            return filter_word
+    return None
 
-    # Writing to json
-    json_location = os.path.abspath('json/config.json')
 
-    with open(json_location, 'r') as f:
-        data = json.load(f)
-        f.close()
+def get_path():
+    app = wx.App(None)
+    style = wx.FD_OPEN | wx.FD_FILE_MUST_EXIST
+    dialog = wx.DirDialog(None, 'Open', style=style)
+    if dialog.ShowModal() == wx.ID_OK:
+        path = dialog.GetPath()
+    else:
+        path = None
+    dialog.Destroy()
+    return path
 
-    data.update(config)
 
-    with open(json_location, 'w') as f:
-        json.dump(data, f, indent=4)
-        f.close()
+def getpass(prompt=''):
+    p_s = ''
+    proxy_string = ['​'] * 40
+    while True:
+        sys.stdout.write('\x0D' + prompt + ''.join(proxy_string))
+        c = msvcrt.getch()
+        if c == b'\x03':
+            raise KeyboardInterrupt
+        if c == b'\r':
+            break
+        elif c == b'\x08':
+            p_s = p_s[:-1]
+            proxy_string[len(p_s)] = " "
+        else:
+            proxy_string[len(p_s)] = "*"
+            p_s += c.decode()
 
-    print(fc.CYAN + '\n\nSetup complete!')
-    print('\n' + fc.GREEN + "We've (I mean i've) saved everything to the config ;)")
-    print("Here, have some bread: 🍞👍")
+    sys.stdout.write('\n')
+    return p_s
 
-    # TODO: Add support for other languages
+
+try:
+
+    if "git" in sys.argv:
+        git_setup()
+    else:
+        setup()
+        git_setup()
+
 except KeyboardInterrupt:
     print(fc.LIGHTRED_EX + '\n\nSetup cancelled.')
     exit(1)
+
+# ----Finishing the setup----
+
+json_location = os.path.abspath('json/config.json')
+
+with open(json_location, 'r') as f:
+    data = json.load(f)
+    f.close()
+
+data.update(config)
+
+with open(json_location, 'w') as f:
+    json.dump(data, f, indent=4)
+    f.close()
+
+print(fc.CYAN + '\nSetup complete!')
+print('\n' + fc.GREEN + "We've (I mean i've) saved everything to the config ;)")
+print("Here, have some bread: 🍞👍")

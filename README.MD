@@ -1,5 +1,7 @@
 <h1 align=center> PyCMD - A CLI tool</h1>
 
+This project will soon be migrated to use `node.js` so the installation would be much simpler :​D
+
 ## Contents
 - [About](#description)
 - [Setup](#installation)

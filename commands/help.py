@@ -28,8 +28,6 @@ with open('json/config.json', 'r') as f:
 
 __setup_done__ = config['is_setup']
 
-color_enabled = True
-
 
 setup = f"""
 {fc.LIGHTCYAN_EX}Welcome to PYCMD!{fc.RESET}
@@ -49,32 +47,53 @@ Github: {fc.LIGHTBLUE_EX}https://www.github.com/Yasho022/pycmd{fc.RESET}
 
 if not __setup_done__ and not "help" in argv:
     print((setup))
-else:
-    print(ascii_art)
+    exit(0)
 
-    print(f"""
+
+# And that's how you save one level of indentation.
+
+print(ascii_art)
+
+print(f"""
 {fc.LIGHTWHITE_EX}USAGE{fc.RESET}:
 
 {fc.RED}${fc.YELLOW} pycmd {fc.LIGHTBLUE_EX} <command> {fc.GREEN}<argument>{fc.LIGHTBLACK_EX} <flags> {fc.RESET}
 """)
 
-    # TABLE OF COMMANDS
-    # DON'T TOUCH, IT WORKS
-    file = open('json/commands.json', 'r')
-    commands_data = json.load(file)
+file = open('json/commands.json', 'r')
+commands_data = json.load(file)
 
-    print(fc.CYAN + "┌─" + "─"*27 + "┬" + "─"*44 + "─┐")
-    print(f"{fc.CYAN}│{fc.YELLOW}{'Commands'.center(28, ' ')}{fc.CYAN}│{fc.YELLOW}{'Description'.center(42, ' ')}{fc.CYAN}{' '*3}│")
+print(fc.CYAN + "┌" + "─"*28 + "┬" + "─"*45 + "┐")
+print(f"{fc.CYAN}│{fc.YELLOW}{'Commands'.center(28, ' ')}{fc.CYAN}│{fc.YELLOW}{'Description'.center(42, ' ')}{fc.CYAN}{' '*3}│")
 
-    print(fc.CYAN + "└─" + "─"*27 + "┴" + "─"*44 + "─┘")
-    print(fc.LIGHTBLACK_EX + "┌─" + "─"*27 + "┬" + "─"*44 + "─┐")
-    for i in commands_data:
-        name_center = i['name'].center(27, ' ')
-        space_for_dash_left = " "
-        print(
-            f"{fc.LIGHTBLACK_EX}│{fc.LIGHTBLUE_EX}{name_center}{space_for_dash_left}{fc.LIGHTBLACK_EX}│  {fc.GREEN}{i['description'].center(39, ' ')}    {fc.LIGHTBLACK_EX}│")
-    print(fc.LIGHTBLACK_EX + "└─" + "─"*27 + "┴" + "─"*44 + "─┘")
+print(fc.CYAN + "└" + "─"*28 + "┴" + "─"*45 + "┘")
 
-    print("\nFor more information on a specific command, type:")
-    print(f"{fc.LIGHTRED_EX}$ {fc.YELLOW}pycmd {fc.LIGHTBLUE_EX}<command>{fc.LIGHTBLACK_EX} --help")
-########################
+"""
+┌────────────────────────────┬─────────────────────────────────────────────┐
+│          Commands          │               Description                   │
+└────────────────────────────┴─────────────────────────────────────────────┘
+"""
+
+print(fc.LIGHTBLACK_EX + "┌" + "─"*28 + "┬" + "─"*45 + "┐")
+for i in commands_data:
+    name_center = i['name'].center(27, ' ')
+    description_center = i['description'].center(39, ' ')
+    print(
+        f"{fc.LIGHTBLACK_EX}│{fc.LIGHTBLUE_EX}{name_center} {fc.LIGHTBLACK_EX}│  {fc.GREEN}{description_center}    {fc.LIGHTBLACK_EX}│")
+print(fc.LIGHTBLACK_EX + "└" + "─"*28 + "┴" + "─"*45 + "┘")
+
+"""
+┌────────────────────────────┬─────────────────────────────────────────────┐
+│           command1         │                description1                 │
+│           command2         │                description2                 │
+│           command3         │                description3                 │
+│           command4         │                description4                 │
+│           command5         │                description5                 │
+│           command6         │                description6                 │
+│           command7         │                description7                 │
+│           command8         │                description8                 │
+└────────────────────────────┴─────────────────────────────────────────────┘
+"""
+
+print("\nFor more information on a specific command, type:")
+print(f"{fc.LIGHTRED_EX}$ {fc.YELLOW}pycmd {fc.LIGHTBLUE_EX}<command>{fc.LIGHTBLACK_EX} --help")
