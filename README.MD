@@ -24,7 +24,7 @@ PYCMD only supports `Windows` at the moment.<br>
 - Clone the repo:
 
   ```console
-  git clone https://www.github.com/Yasho/PyCMD
+  git clone https://www.github.com/Yasho/PyCMD.git
   ```
 <ul><li>
 <details>
@@ -47,7 +47,7 @@ PYCMD only supports `Windows` at the moment.<br>
 </ul>
 
 - Run the `pycmd setup` command and follow the on-screen instructions.
-s
+
   ```console
   pycmd setup
   ```
@@ -69,7 +69,7 @@ s
 ## Contribute 💖
 
 #### How do I contribute?
-First of all, thank you mr.Handsome for contributing to PyCMD. You're awesome! ;​)
+First of all, thank you kind gentlemen for contributing to PyCMD. You're awesome! ;​)
 <!-- btw this (";​)") is zero-width space -->
 
 Here are some ways you can help:
@@ -88,7 +88,7 @@ pls tell me about bugs in the code. I don't even use light mode.
 ### Contributers:
 ._.
 
-Absolutely no one.
+Hey look, you could be the first one!
 
 
 ## License 🔑
