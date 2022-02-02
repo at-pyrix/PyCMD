@@ -42,10 +42,10 @@ Github: {fc.LIGHTBLUE_EX}https://www.github.com/Yasho022/pycmd{fc.RESET}
 {st.DIM}We'll walk you through the process of setting up PYCMD environment.{fc.RESET}{st.RESET_ALL}
 
 {fc.LIGHTGREEN_EX}If that looks good to you, start by typing:
-{fc.LIGHTRED_EX}$ {fc.YELLOW}pycmd {fc.RESET}setup{fc.RESET}
+{fc.LIGHTBLACK_EX}$ {fc.YELLOW}pycmd {fc.RESET}setup{fc.RESET}
 """
 
-if not __setup_done__ and not "help" in argv:
+if not __setup_done__ and not "-help" in argv:
     print((setup))
     exit(0)
 
@@ -55,18 +55,18 @@ if not __setup_done__ and not "help" in argv:
 print(ascii_art)
 
 print(f"""
-{fc.LIGHTWHITE_EX}USAGE{fc.RESET}:
+{fc.CYAN}USAGE
 
-{fc.RED}${fc.YELLOW} pycmd {fc.LIGHTBLUE_EX} <command> {fc.GREEN}<argument>{fc.LIGHTBLACK_EX} <flags> {fc.RESET}
+{fc.LIGHTBLACK_EX}${fc.YELLOW} pycmd{fc.LIGHTBLUE_EX} <command>{fc.GREEN} <argument>{fc.LIGHTBLACK_EX} <flags> {fc.RESET}
 """)
 
 file = open('json/commands.json', 'r')
 commands_data = json.load(file)
 
-print(fc.CYAN + "┌" + "─"*28 + "┬" + "─"*45 + "┐")
-print(f"{fc.CYAN}│{fc.YELLOW}{'Commands'.center(28, ' ')}{fc.CYAN}│{fc.YELLOW}{'Description'.center(42, ' ')}{fc.CYAN}{' '*3}│")
+print(fc.MAGENTA + "┌" + "─"*28 + "┬" + "─"*45 + "┐")
+print(f"{fc.MAGENTA}│{fc.YELLOW}{'Commands'.center(28, ' ')}{fc.MAGENTA}│{fc.YELLOW}{'Description'.center(42, ' ')}{fc.MAGENTA}{' '*3}│")
 
-print(fc.CYAN + "└" + "─"*28 + "┴" + "─"*45 + "┘")
+print(fc.MAGENTA + "└" + "─"*28 + "┴" + "─"*45 + "┘")
 
 """
 ┌────────────────────────────┬─────────────────────────────────────────────┐

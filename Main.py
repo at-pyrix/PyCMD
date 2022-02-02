@@ -4,8 +4,10 @@ import sys
 import msvcrt
 import json
 from difflib import SequenceMatcher
-from colorama import Fore as fc, Back as bk, Style as st, init
+from colorama import Fore as fc, Style as st, init
 init(autoreset=True)
+
+version = "1.0"
 
 os.chdir(os.path.dirname(os.path.realpath(__file__)))
 
@@ -31,20 +33,21 @@ def help(command: str):
     data = json.load(file)
     for i in data:
         if i['name'] == command:
-            print(f'\n\nHelp for {fc.CYAN}{command}\n')
-            print(
-                f'{fc.LIGHTWHITE_EX}{i["description"]}\n\n')
-            print(
-                f'Usage{fc.BLACK}: {fc.YELLOW}{i["usage"]}\n')
-            try:
-                print(
-                    f'Example{fc.BLACK}: {fc.LIGHTBLUE_EX}{i["example"]}\n')
-                print(
-                    f'Parameters{fc.BLACK}: {fc.GREEN}{", ".join(i["parameters"])}\n')
-                print(
-                    f'Flags{fc.BLACK}: {fc.LIGHTBLACK_EX}{i["flags"]}\n')
-            except KeyError:
-                pass
+            if 'description' in i:
+                print(" "*(2) +
+                    f'\n{fc.YELLOW}{i["description"]}\n')
+            if 'usage' in i:
+                print(" "*(2) +
+                    f'{fc.GREEN}Usage:' + " "*(15 -len('Usage:')) +  f'{fc.RESET}{i["usage"]}')
+            if 'parameters' in i:
+                print(" "*(2) +
+                    f'{fc.GREEN}Parameters:' + " "*(15 -len('Parameters:')) +  f'{fc.RESET}{", ".join(i["parameters"])}')
+            if 'flags' in i:
+                print(" "*(2) +
+                    f'{fc.GREEN}Flags:' + " "*(15 -len('Flags:')) +  f'{fc.RESET}{i["flags"]}')
+            if 'example' in i:
+                print(" "*(2) +
+                    f'{fc.GREEN}Example:' + " "*(15 -len('Example:')) +  f'{fc.RESET}{i["example"]}')
 
 
 def autocorrect(word, word_list, tolerance=0.4):
@@ -54,30 +57,29 @@ def autocorrect(word, word_list, tolerance=0.4):
     return None
 
 
-def execute(function: str, parameter: str, flags: list):
+def execute(command: str, parameter: str, flags: list):
     # TODO: FIX THIS
-    
-    if not function:
+
+    if not command:
+        if "-v" in flags or "-version" in flags:
+            print(f'PYCMD v{version}')
+            return 0
         os.system("python commands/help.py help " + " ".join(flags))
         return 0
-    
+
     if "-help" in flags or "-h" in flags:
-        help(function)
+        help(command)
         return 0
 
-    if "help" in function:
-        os.system("python commands/help.py help " + " ".join(flags))
-        return 0
-
-    if os.path.exists(f'commands/{function}.py'):
+    if os.path.exists(f'commands/{command}.py'):
         os.system(
-            f'python commands/{function}.py {parameter} {" ".join(flags)}')
+            f'python commands/{command}.py {parameter} {" ".join(flags)}')
         return 0
     else:
-        corrected = autocorrect(function.lower(), os.listdir('commands'))
+        corrected = autocorrect(command.lower(), os.listdir('commands'))
         if corrected:
             corrected = corrected.replace('.py', '')
-            print(f'\nCommand {fc.LIGHTBLACK_EX}"{fc.LIGHTRED_EX}{function}{fc.LIGHTBLACK_EX}"{fc.RESET} not found.\nDid you mean {fc.LIGHTBLACK_EX}"{fc.CYAN}{corrected}{fc.RESET}{fc.LIGHTBLACK_EX}"{fc.RESET}?')
+            print(f'\nCommand {fc.LIGHTBLACK_EX}"{command}{fc.LIGHTBLACK_EX}"{fc.RESET} not found.\nDid you mean {fc.LIGHTBLACK_EX}"{fc.CYAN}{corrected}{fc.RESET}{fc.LIGHTBLACK_EX}"{fc.RESET}?')
             print(
                 f'{fc.LIGHTBLACK_EX}[{fc.GREEN}Y{fc.LIGHTBLACK_EX}/{fc.BLUE}n{fc.LIGHTBLACK_EX}]', end="\r")
             response = msvcrt.getch()
@@ -85,9 +87,11 @@ def execute(function: str, parameter: str, flags: list):
                 print(fc.LIGHTGREEN_EX + 'Yes  \n')
                 execute(corrected, parameter, flags)
             else:
-                print(fc.BLUE + 'Abort')
+               print(f'Run {fc.CYAN}pycmd help{fc.RESET} for list of commands.')
         else:
-            print(f'\nCommand "{function}" not found.')
+            print(
+                f'\nCommand {fc.LIGHTBLACK_EX}"{command}{fc.LIGHTBLACK_EX}"{fc.RESET} not found.')
+            print(f'Run {fc.CYAN}pycmd help{fc.RESET} for list of commands.')
         return 1
 
 

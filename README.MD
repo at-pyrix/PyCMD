@@ -4,15 +4,28 @@ This project will soon be migrated to use `node.js` so the installation would be
 
 ## Contents
 - [About](#description)
+  - [Why PyCMD?](#why-pycmd)
 - [Setup](#installation)
+  - [Requirements](#requirements)
 - [PyCMD Commands](#commands)
+- [Usage](#usage)
 - [How can you help?](#contribute-)
+  - [Contributers](#contributers)
 - [License](#license-)
 - [Frequently Asked Questions](#faqs)
+
+
 ## Description
 
-
 **PyCmd is a command-line interface tool to help you manage your projects. It saves you a lot of clicks. If that sounds interesting, [Setup PyCMD](#installation)**
+
+
+### Why PyCMD?
+
+PYCMD helps you create, delete, manage, and list your projects super-fast ⚡
+
+**Here's how things are faster with PYCMD**
+  <!--TODO: SHOW COMPARISION -->
 
 
 PYCMD only supports `Windows` at the moment.<br>
@@ -25,6 +38,11 @@ PYCMD only supports `Windows` at the moment.<br>
 
   ```console
   git clone https://www.github.com/Yasho/PyCMD.git
+  ```
+- Install the dependencies:
+
+  ```console
+  pip install -r requirements.txt
   ```
 <ul><li>
 <details>
@@ -51,6 +69,11 @@ PYCMD only supports `Windows` at the moment.<br>
   ```console
   pycmd setup
   ```
+### Requirements
+- [Python 3+ (Tested on 3.9.9)](https://www.python.org/downloads/)
+- [Pip](https://pypi.org/project/pip/)
+- [Git](https://git-scm.com/downloads)
+- [VS Code](https://code.visualstudio.com/download)
 
 ## Commands
 
@@ -60,11 +83,24 @@ PYCMD only supports `Windows` at the moment.<br>
 | `pycmd help` | Display help information. |
 | `pycmd setup` | Setup PyCMD. |
 | `pycmd ls` | List all projects. |
-| `pycmd new` | Create a new project. |
 | `pycmd open` | Open a project. |
 | `pycmd rm` | Remove a project. |
 | `pycmd create` | Create a new project + initialize a Git repository. |
 
+## Usage
+
+Use `pycmd` to run the command line interface.
+
+Usage:
+```console
+$ pycmd <command> <parameter> --<flags> 
+```
+
+Example:
+```powershell
+pycmd create hello_world.py -private -y
+# Creates a new python project
+```
 
 ## Contribute 💖
 
@@ -139,8 +175,6 @@ SOFTWARE.
 > | Generates Boiler Plate | |
 > | Manages GIT | |
 > | Light - Doesn't take too much space |
- 
-
 
 
 - Does PyCMD collect any user data?
@@ -149,7 +183,14 @@ SOFTWARE.
 - How do you contribute to PyCMD?
 > You can contribute to PyCMD by [opening an issue](https://www.github.com/Yasho022/PyCMD/issues) or [forking](https://www.github.com/Yasho022/PyCMD/fork). 
 
+- But seriously, I don't like the name?
+> You can change the name of `PyCMD` to something else by renaming the `pycmd.cmd` in the `bin` folder.
+> Example:
+> ```
+> ren bin/pycmd.cmd nevergonnagiveyouup.cmd
+> ```
+> However, this will only change the name to use PYCMD, all the commands will still use the `PyCMD` name.
 ---
 
-
+*heavily inspired by npm cli*
 

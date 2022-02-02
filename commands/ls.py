@@ -1,24 +1,16 @@
 from github import Github
 import requests
 import sys
+import dotenv
 import os
 from colorama import Fore as fc
 import time
 import sys
+dotenv.load_dotenv(".env")
 
 # TODO: Check if the project is a git repo by checking the .git folder
 
 # checks if it is a file or a folder and lists the folder
-
-def get_env(key: str) -> str:
-    env_file = open(".env", "r")
-    secrets = env_file.read()
-    env_file.close()
-    env_dict = {}
-    for i in secrets.splitlines():
-        key, value = i.split("=")
-        env_dict[key] = value.replace('"', '').strip()
-    return env_dict[key]
 
 def listdir(path):
     listdir_path = os.listdir(path)
@@ -26,7 +18,7 @@ def listdir(path):
     for file in listdir_path:
         filename, file_extension = os.path.splitext(file)
         file_extension = str(file_extension)
-        if file_extension != "":
+        if file_extension:
             continue
         else:
             dir__.append(filename)
@@ -34,7 +26,7 @@ def listdir(path):
 
 
 if "repo" in sys.argv[1] or "git" in sys.argv[1]:
-    g = Github(get_env('GITHUB_TOKEN'))
+    g = Github(os.getenv('GITHUB_TOKEN'))
     user = g.get_user()
     login = user.login
 

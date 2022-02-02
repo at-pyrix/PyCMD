@@ -3,34 +3,20 @@ import wx
 import requests
 from difflib import SequenceMatcher
 import msvcrt
+import textwrap
 import requests
 from time import sleep
+import dotenv
 import sys
 import os
 import json
 init(autoreset=True)
+dotenv.load_dotenv()
 
-# TODO: Add support for other languages
+# WARNING: SUPER UGLY CODE AHEAD
+
 
 config = {"is_setup": True, "projects": {}}
-
-
-def save_env(key: str, value: str) -> None:
-    with open('.env', 'r') as f:
-        lines = f.readlines()
-        f.close()
-
-    with open('.env', 'w') as f:
-        key_found = False
-        for line in lines:
-            if key in line:
-                f.write(f'{key}="{value}"\n')
-                key_found = True
-            else:
-                f.write(line)
-        if not key_found:
-            f.write(f'{key}="{value}"\n')
-        f.close()
 
 
 # Sorry for this:
@@ -40,17 +26,17 @@ def setup():
 # I know this is super ugly, but I'm sticking with it for now.
 # Really sorry
 
-    print(f"""
-This script will help you to setup your PYCMD environment.
-It saves your configuration in "config.json" in the json directory. 
+    print(textwrap.dedent(f"""
+    This script will help you to setup your PYCMD environment.
+    It saves your configuration in "config.json" in the json directory. 
 
-After you have finished the setup, run `pycmd --help`
-to get the list of commands and usage.    
+    After you have finished the setup, run `pycmd --help`
+    to get the list of commands and usage.    
 
-You can change these settings anytime.
+    You can change these settings anytime.
 
-{fc.LIGHTBLACK_EX}Ctrl^C to exit.
-    """)
+    {fc.LIGHTBLACK_EX}Ctrl^C to exit.
+    """))
 
     print("── Press any key to continue ──", end="\r")
     if msvcrt.getch() == b'\x03':
@@ -97,6 +83,8 @@ You can change these settings anytime.
 
         if i in languages_supported:
             languages_got.append(i)
+
+    languages_got = list(set(languages_got))
 
     if languages_got == ['Other']:
         print("\r" + fc.LIGHTWHITE_EX +
@@ -185,39 +173,9 @@ You can change these settings anytime.
 
 
 def git_setup():
-    print("\n" + fc.GREEN + "GIT Setup\n\n")
+    print("\n" + fc.GREEN + "GIT Setup\n")
 
     valid = False
-
-    for i in range(1, 4):
-        print(fc.LIGHTWHITE_EX +
-              "What is your GitHub username ?")
-        username = input(fc.CYAN + "» " + fc.GREEN)
-        print(fc.RESET)
-
-        url = f"https://api.github.com/users/{username}"
-        response = requests.get(url)
-        json = response.json()
-
-        if 'login' in json:
-            print(
-                fc.GREEN + "\nAwesome! We'll use " + fc.BLUE + username + fc.GREEN + " as your GitHub username.")
-            valid = True
-            break
-
-        elif 'message' in json and json['message'] == 'Not Found':
-            if i == 3:
-                print('\n' + fc.RED + 'Too many attempts. Exiting.')
-                break
-            print("Whoops! Looks like you entered an invalid username.")
-            print(f'Retrying... {i}/3\n')
-
-        else:
-            print(json)
-            exit(1)
-
-    if not valid:
-        exit(1)
 
     print('\nThis is so PYCMD can initialize and delete git repositories.\n')
     print(
@@ -247,15 +205,13 @@ def git_setup():
         }
 
         response = requests.head(
-            f'https://api.github.com/users/{username}', headers=headers)
+            f'https://api.github.com/', headers=headers)
         token_valid = response.status_code == 200
 
         if token_valid:
             print(
                 fc.GREEN + '\nGreat! We\'ll use this token to authenticate with GitHub.\n')
-
-            save_env('GITHUB_USERNAME', username)
-            save_env('GITHUB_TOKEN', github_token)
+            dotenv.set_key(dotenv.find_dotenv(), 'GITHUB_TOKEN', github_token)
         else:
             print('\n' + fc.RED + 'Invalid token. Git Setup Incomplete')
 
@@ -304,6 +260,8 @@ try:
 
     if "git" in sys.argv:
         git_setup()
+        print(fc.CYAN + '\nSetup complete!')
+        exit()
     else:
         setup()
         git_setup()
@@ -326,6 +284,6 @@ with open(json_location, 'w') as f:
     json.dump(data, f, indent=4)
     f.close()
 
-print(fc.CYAN + '\nSetup complete!')
+print(fc.CYAN + '\rSetup complete!')
 print('\n' + fc.GREEN + "We've (I mean i've) saved everything to the config ;)")
 print("Here, have some bread: 🍞👍")

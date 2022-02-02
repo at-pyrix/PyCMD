@@ -2,7 +2,7 @@
 	{
 		"name": "create",
 		"description": "Create a new Project + Repo",
-		"usage": "create [project_name].[language] [flags]",
+		"usage": "create [project_name].[language-ext] [flags]",
 		"parameters": [
 			"py",
 			"js",
@@ -10,7 +10,7 @@
 			"java"
 		],
 		"example": "pycmd create google.html -p",
-		"flags": "-p, --private"
+		"flags": "-p -private, -l  -local"
 	},
 	{
 		"name": "ls",
@@ -64,7 +64,8 @@
 	{
 		"name": "setup",
 		"description": "Configure PYCMD, your preferences",
+		"parameters": ["git"],
 		"usage": "setup",
-		"example": "pycmd setup"
+		"example": "pycmd setup git"
 	}
 ]
