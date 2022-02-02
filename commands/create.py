@@ -1,10 +1,8 @@
 # Command handler for the create command
-from distutils.command.clean import clean
 from github import Github
 from colorama import Fore as fc, Back as bg, init
 from subprocess import run
 import sys
-from datetime import datetime
 import msvcrt
 import json
 import itertools
@@ -31,12 +29,14 @@ def argparse(args: list):
 
 
 argument, flags = argparse(sys.argv)
+
 # Making the characters variable-friendly with regex
 # Source: https://stackoverflow.com/a/3305731
 
 # This will send it to "Unknown Project"
-if "." not in argument: argument = 'untitled.unknown'
-project_name = re.sub('\W|^(?=\d)','_', argument).split('.')[0]
+if "." not in argument:
+    argument = 'untitled.unknown'
+project_name = re.sub('\W|^(?=\d)', '_', argument.split('.')[0])
 
 with open("json/config.json", "r") as file:
     config = json.load(file)
@@ -80,7 +80,7 @@ elif '.java' in argument:
             
             Scanner scanner = new Scanner(System.in);
             
-            # Write your code here
+            // Write your code here
             
             scanner.close();
         }}
@@ -205,14 +205,6 @@ def git_init(name, private: bool = False):
     user = gh.get_user()
     public_priv = 'private' if private else 'public'
 
-    commands = [{'cd ' + os.path.join(root_folder, project_name) : 'Changing directory to ' + os.path.relpath(os.path.join(root_folder, project_name))},
-        {'git init': 'Initializing git repository'},
-                {f'git remote add origin https://github.com/{user.login}/{project_name}.git': 'Connecting to remote repository'},
-                {'git add -A': 'Adding files'},
-                {'git commit -m "Initial commit"': 'Committing files'},
-                {'git push -u origin master': 'Pushing files to remote'}
-                ]
-
     print(
         f'\n{fc.MAGENTA}Initializing {public_priv} repository: {fc.LIGHTYELLOW_EX}{name}')
 
@@ -222,6 +214,13 @@ def git_init(name, private: bool = False):
     load_anim.start()
     try:
         user.create_repo(name, private=private)
+        commands = [{'cd ' + os.path.join(root_folder, project_name): 'Changing directory to ' + os.path.relpath(os.path.join(root_folder, project_name))},
+                    {'git init': 'Initializing git repository'},
+                    {f'git remote add origin https://github.com/{user.login}/{project_name}.git': 'Connecting to remote repository'},
+                    {'git add -A': 'Adding files'},
+                    {'git commit -m "Initial commit"': 'Committing files'},
+                    {'git push -u origin master': 'Pushing files to remote'}
+                    ]
     except Exception as e:
         end = True
         e = '{' + str(e).split('{')[1].split('}')[0] + '}'
@@ -234,8 +233,8 @@ def git_init(name, private: bool = False):
             description = i[command]
             output = run(command, shell=True, capture_output=True)
             if output.returncode == 0:
-                text = description
-                time.sleep(.1)
+                text = description + ' ' * 20
+                time.sleep(.3)
             else:
                 end = True
                 print(bg.RED + '\rERR' + bg.RESET +
@@ -246,7 +245,7 @@ def git_init(name, private: bool = False):
                 exit(1)
         end = True
         load_anim.join()
-        print(fc.GREEN + '\rSuccessfully initialized git')
+        print(fc.GREEN + '\rSuccessfully initialized git' + ' ' * 20)
 
 
 boiler_plate = textwrap.dedent(boiler_plate).strip()
@@ -261,7 +260,7 @@ Modified: `if False:`
 
 """
 if '-y' not in flags:
-    
+
     def listen_to_keyboard():
         while not time_over:
             key = msvcrt.getch()
@@ -273,13 +272,14 @@ if '-y' not in flags:
             elif key == b'y':
                 global continued
                 print("\r" + fc.YELLOW + "\rCreating project in " +
-                    os.path.join(root_folder, project_name))
+                      os.path.join(root_folder, project_name))
                 continued = True
                 break
-    
+
     print(fc.LIGHTBLACK_EX +
-        "\nYou can skip this delay by passing the '-y' flag. Example: pycmd create test.py -y")
-    print(f"Press {fc.LIGHTWHITE_EX}'Y'{fc.RESET} to continue or {fc.LIGHTWHITE_EX}'N'{fc.RESET} to cancel.")
+          "\nYou can skip this delay by passing the '-y' flag. Example: pycmd create test.py -y")
+    print(
+        f"Press {fc.LIGHTWHITE_EX}'Y'{fc.RESET} to continue or {fc.LIGHTWHITE_EX}'N'{fc.RESET} to cancel.")
     cancelled = False
     time_over = False
     continued = False
@@ -308,19 +308,21 @@ if language == 'web':
         file.close()
     open('index.js', 'w').close()
     open('style.css', 'w').close()
-    
+
 elif language == 'javascript':
     with open(f'index.js', 'w') as file:
         file.write(boiler_plate)
         file.close()
 
+    
     output = run(f'npm init -y', shell=True, capture_output=True)
-    print(bg.RED + '\rERR' + bg.RESET +
-          " " + 'While initializing npm' + " " * 20)
-    print(bg.BLUE + fc.BLACK + 'INFO' + fc.RESET + bg.RESET + ' ' +
-          f'While executing: {fc.CYAN}"' + 'npm init -y' + f'"{fc.RESET}: \n')
-    print(output.stderr.decode('unicode_escape'))
-    print('\nSkipping...')
+    if output.returncode != 0:
+        print(bg.RED + '\rERR' + bg.RESET +
+            " " + 'While initializing npm' + " " * 20)
+        print(bg.BLUE + fc.BLACK + 'INFO' + fc.RESET + bg.RESET + ' ' +
+            f'While executing: {fc.CYAN}"' + 'npm init -y' + f'"{fc.RESET}: \n')
+        print(output.stderr.decode('unicode_escape'))
+        print('\nSkipping...')
 
 
 # TODO: FIX THIS RIGHT NOW!
@@ -328,14 +330,14 @@ else:
     with open(project_name + extension, 'w') as file:
         file.write(boiler_plate)
         file.close()
-        
+
 with open('README.MD', 'w') as file:
     file.write('# ' + project_name)
     file.close()
 
 print(fc.GREEN + 'Successfully generated boiler plate')
 
-if '-local' not in flags or '-l' not in flags:
+if not '-local' in flags and not '-l' in flags:
     if '-private' in flags or '-p' in flags:
         git_init(project_name, True)
     else:

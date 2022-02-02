@@ -10,7 +10,7 @@
 			"java"
 		],
 		"example": "pycmd create google.html -p",
-		"flags": "-p -private, -l  -local"
+		"flags": "-p -private, -l  -local -y"
 	},
 	{
 		"name": "ls",
