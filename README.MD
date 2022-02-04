@@ -2,6 +2,12 @@
 
 This project will soon be migrated to use `node.js` so the installation would be much simpler :​D
 
+## ToDo:
+- Add the `rm` command
+- Add the `ren` command
+- Add the `ls` command
+- Update `readme`
+
 ## Contents
 - [About](#description)
   - [Why PyCMD?](#why-pycmd)
@@ -25,7 +31,7 @@ This project will soon be migrated to use `node.js` so the installation would be
 PYCMD helps you create, delete, manage, and list your projects super-fast ⚡
 
 **Here's how things are faster with PYCMD**
-  <!--TODO: SHOW COMPARISION -->
+  <!-- TODO: SHOW COMPARISION WITH GIF -->
 
 
 PYCMD only supports `Windows` at the moment.<br>

@@ -59,7 +59,8 @@
 			"java"
 		],
 		"usage": "open [project_name]",
-		"example": "pycmd open hack_elon_musk.py"
+		"example": "pycmd open hack_elon_musk.py",
+		"flags": "-e (To open with explorer)"
 	},
 	{
 		"name": "setup",

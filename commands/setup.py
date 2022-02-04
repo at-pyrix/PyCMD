@@ -1,9 +1,9 @@
-from colorama import Fore as fc, Style as st, init
+from colorama import Fore as fc, init
 import wx
 import requests
 from difflib import SequenceMatcher
 import msvcrt
-import textwrap
+from textwrap import dedent
 import requests
 from time import sleep
 import dotenv
@@ -15,15 +15,11 @@ dotenv.load_dotenv()
 
 # WARNING: SUPER UGLY CODE AHEAD
 
-
-config = {"is_setup": False}
-
-
 def autocorrect(word: str, word_list: list[str], tolerance: float = 0.6) -> str:
     # Returns autocorrected word from the word_list
     # If no match is found, returns the original word
-    # Tolerance is the strictness of the match.
     # Lower tolerance = more strict
+    
     for filter_word in word_list:
         if SequenceMatcher(a=word, b=filter_word).ratio() > tolerance:
             return filter_word
@@ -42,29 +38,27 @@ def get_path():
     return path
 
 
-def getpass(prompt=''):
+def getpass(prompt='', max_length=None):
     p_s = ''
-    proxy_string = ['​'] * 40
+    proxy_string = ['​'] * max_length
     while True:
         sys.stdout.write('\x0D' + prompt + ''.join(proxy_string))
         c = msvcrt.getch()
-        if c == b'\x03':
+        if c == b'\x03': # Ctrl-C
             raise KeyboardInterrupt
-        if c == b'\r':
+        if c == b'\r': # Enter
             break
-        elif c == b'\x08':
+        elif c == b'\x08': # Backspace
             p_s = p_s[:-1]
             proxy_string[len(p_s)] = " "
         else:
             proxy_string[len(p_s)] = "*"
             p_s += c.decode()
-
     sys.stdout.write('\n')
     return p_s
 
 
 def projects_setup():
-    global config
     config = {"projects": {}}
 
     print("\r" + fc.LIGHTWHITE_EX +
@@ -89,7 +83,7 @@ def projects_setup():
     languages_got = []
 
     for lang in languages_wanted:
-        i = autocorrect(lang, languages_supported)
+        i = autocorrect(lang, languages_supported, 0.4)
 
         # Abbreviations
         if lang == 'css' or lang == 'html':
@@ -131,9 +125,9 @@ def projects_setup():
 
     print(fc.LIGHTWHITE_EX + "\nDo you organize your projects in folders? (Y/n)")
     print(fc.CYAN + "» " + fc.CYAN, end='')
-    response = msvcrt.getch()
+    key = msvcrt.getch()
 
-    if response == b"y":
+    if key == b"y":
         print('\r' + fc.CYAN + f"» {fc.GREEN}Yes")
         print(fc.GREEN + "\nAwesome! Let's set up your project folders.")
         print(fc.LIGHTBLACK_EX + "─" * 58)
@@ -152,6 +146,9 @@ def projects_setup():
             print(fc.CYAN + "» " +
                   fc.RED + "You didn't select a folder :/")
             exit(1)
+            
+    elif key == b"\x03":
+        raise KeyboardInterrupt
 
     else:
         print('\r' + fc.CYAN + f"» {fc.RED}No")
@@ -170,22 +167,24 @@ def projects_setup():
             print(fc.LIGHTWHITE_EX +
                   "\nIf you're okay with that, press [Y] to continue.")
             key = msvcrt.getch()
-            if key.lower() == b'y':
+            
+            if key == b'y':
                 os.mkdir('Projects')
                 root_folder = os.path.abspath('Projects')
+            elif key == b'\x03':
+                raise KeyboardInterrupt
             else:
                 print(fc.RED + "Sorry, we can't continue without a root folder.")
                 exit(1)
 
-        print(fc.CYAN + "» " + fc.GREEN + root_folder)
-        print()
+        print(fc.CYAN + "» " + fc.GREEN + root_folder + '\n')
         for i in languages_got:
 
             folder = os.path.join(root_folder, i)
 
             try:
                 os.mkdir(folder)
-
+                
             except FileExistsError:
                 pass
 
@@ -193,9 +192,13 @@ def projects_setup():
 
             print(
                 f"{fc.MAGENTA}Created folder for {fc.YELLOW}{i} Projects{fc.LIGHTBLACK_EX}:{fc.RESET} {folder}")
+        
+    save_to_json(config)
+    return config
 
 
 def git_setup():
+    
     print("\n" + fc.GREEN + "GIT Setup\n")
 
     print('\nThis is so PYCMD can initialize and delete git repositories.\n')
@@ -211,15 +214,23 @@ def git_setup():
             f"{fc.LIGHTBLACK_EX}•{fc.LIGHTBLUE_EX} {i}{fc.LIGHTBLACK_EX}: {fc.GREEN}{', '.join(scopes[i])}")
     print('\nSet the expiration date to atleast a month or you will be asked to re-authenticate.')
     print('You can also do this in the .env file.')
-    print('\n' + fc.LIGHTWHITE_EX + "Press [Y] to continue.", end="\r")
-    response = msvcrt.getch().decode()
+    print('\n' + fc.LIGHTWHITE_EX + "Press [Y] to continue.", end="")
+    key = msvcrt.getch()
 
-    if response.lower() == 'n':
-        config['is_setup'] = False
+    if key != b'n' and key != b'\x03':
+        print(fc.LIGHTWHITE_EX + '\rEnter your GitHub token?')
 
-    else:
-        print(fc.LIGHTWHITE_EX + '\nEnter your GitHub token?')
-        github_token = getpass(fc.CYAN + "» " + fc.GREEN)
+        length_valid = False
+        
+        while not length_valid:
+            try:
+                github_token = getpass(fc.CYAN + "» " + fc.GREEN, 40)
+            except IndexError:
+                print(fc.RED + '\nToken length must be not more than 40 characters.')
+            else:
+                length_valid = True
+
+        del length_valid
 
         token_valid = requests.head(
             f'https://api.github.com/', headers={
@@ -230,42 +241,45 @@ def git_setup():
             print(
                 fc.GREEN + '\nGreat! We\'ll use this token to authenticate with GitHub.\n')
             dotenv.set_key(dotenv.find_dotenv(), 'GITHUB_TOKEN', github_token)
+            return
         else:
             print('\n' + fc.RED + 'Invalid token. Git Setup Incomplete')
-
+    
+    else:
+        print(fc.RED + '\rGit Setup Incomplete')
 
 def editor_setup():
-    global config
+    
     config = {'text-editor': ''}
+    
     print('\n' + fc.CYAN + 'Editor Setup\n')
     print(fc.LIGHTWHITE_EX + '\nWhat is your preferred text editor?\n')
+    
     editors_available = ['Vim', 'GNU Nano', 'GNU Emacs',
                          'Visual Studio Code', 'Sublime Text', 'Atom', 'Other']
+    
     for i in editors_available:
         print(f'{fc.LIGHTBLACK_EX}•{fc.LIGHTBLUE_EX} {i}')
 
-    editor = autocorrect(input(f'\n{fc.CYAN}» {fc.GREEN}'), editors_available)
-
-    if 'code' in editor:
-        editor = 'Visual Studio Code'
-    elif 'nano' in editor:
-        editor = 'GNU Nano'
-    elif 'emacs' in editor:
-        editor = 'GNU Emacs'
+    editor = input(f'\n{fc.CYAN}» {fc.GREEN}')
+    editor = autocorrect(editor, editors_available, 0.4)
+    editor = 'Visual Studio Code' if 'code' in editor else editor
 
     print('\n' + editor)
 
     if editor == 'Other' or editor not in editors_available:
-        print('Sorry we don\'t support any other text-editors or IDE at the moment.')
-        print('Here, Have a Potato: 🥔 (oh wait lemme cook it for you)')
-        print('Here, 🥔 + 🔥 -> 🍠')
+        print('\nSorry we don\'t support any other text-editors or IDE at the moment.')
+        print('Here, Have a Potato: 🥔 (oh wait lemme cook it for you) 🔥🥔🔥')
+        print('Here, 🍠')
         exit(1)
 
     config['text-editor'] = editor
+    
+    save_to_json(config)
+    return config
 
 
-def save_to_json():
-    global config
+def save_to_json(config):
     json_location = os.path.abspath('json/config.json')
 
     with open(json_location, 'r') as f:
@@ -278,9 +292,6 @@ def save_to_json():
         json.dump(data, f, indent=4)
         f.close()
 
-    print('\n' + fc.GREEN + "We've saved everything to the config ;)")
-    print("Here, have some bread: 🍞👍")
-
 
 # <-- MAIN PART --> (or I should say "clean part")
 
@@ -289,7 +300,6 @@ try:
     if "projects" in sys.argv:
         projects_setup()
         print('\n' + fc.CYAN + 'Setup complete!')
-        save_to_json()
 
     elif "git" in sys.argv:
         git_setup()
@@ -298,12 +308,11 @@ try:
     elif 'editor' in sys.argv:
         editor_setup()
         print('\n' + fc.CYAN + 'Setup complete!')
-        save_to_json()
 
     else:
         print(f"\n\n{fc.CYAN}PYCMD Setup")
 
-        print(textwrap.dedent(f"""
+        print(dedent(f"""
         This script will help you to setup your PYCMD environment.
         It saves your configuration in "config.json" in the json directory. 
 
@@ -322,8 +331,12 @@ try:
         projects_setup()
         editor_setup()
         git_setup()
-        config['is_setup'] = True
-        save_to_json()
+        
+        save_to_json({"is_setup": True})
+        
+        print('\n' + fc.CYAN + 'Setup complete!')
+        print('\n' + fc.GREEN + "We've saved everything to the config ;)")
+        print("Here, have some bread: 🍞👍")
 
 except KeyboardInterrupt:
     print(fc.LIGHTRED_EX + '\n\nSetup cancelled.')

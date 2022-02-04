@@ -1,10 +1,11 @@
 {
     "is_setup": true,
     "projects": {
-        "python_projects_path": "C:\\Programming\\Python",
-        "java_projects_path": "C:\\Programming\\Java",
         "node.js_projects_path": "C:\\Programming\\NodeJS",
-        "web_projects_path": "C:\\Programming\\Web"
+        "python_projects_path": "C:\\Programming\\Python",
+        "web_projects_path": "C:\\Programming\\Web",
+        "rust_projects_path": "C:\\Programming\\Rust",
+        "java_projects_path": "C:\\Programming\\Java"
     },
     "text-editor": "Visual Studio Code"
 }

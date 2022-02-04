@@ -47,7 +47,6 @@ extension = ''
 if '.py' in argument:
     extension = '.py'
     language = 'python'
-    root_folder = config['projects']['python_projects_path']
     boiler_plate = f"""
     # {project_name}
     
@@ -61,14 +60,12 @@ if '.py' in argument:
 
 elif '.js' in argument or '.nodejs' in argument:
     extension = '.js'
-    language = 'javascript'
-    root_folder = config['projects']['node.js_projects_path']
+    language = 'node.js'
     boiler_plate = f"// {project_name}\n"
 
 elif '.java' in argument:
     extension = '.java'
     language = 'java'
-    root_folder = config['projects']['java_projects_path']
     boiler_plate = f"""
     // {project_name}
     
@@ -89,7 +86,6 @@ elif '.java' in argument:
 
 elif '.html' in argument or '.css' in argument or '.web' in argument:
     language = 'web'
-    root_folder = config['projects']['web_projects_path']
     boiler_plate = f"""
     <!DOCTYPE html>
     <html lang="en">
@@ -110,7 +106,6 @@ elif '.html' in argument or '.css' in argument or '.web' in argument:
 elif '.rs' in argument:
     extension = '.rs'
     language = 'rust'
-    root_folder = config['projects']['rust_projects_path']
 
     boiler_plate = f"""
     // {project_name}
@@ -123,7 +118,6 @@ elif '.rs' in argument:
 elif '.cpp' in argument or '.c++' in argument:
     extension = '.cpp'
     language = 'c++'
-    root_folder = config['projects']['cpp_projects_path']
 
     boiler_plate = f"""
     // {project_name}
@@ -136,7 +130,6 @@ elif '.cpp' in argument or '.c++' in argument:
 elif '.go' in argument:
     extension = '.go'
     language = 'go'
-    root_folder = config['projects']['go_projects_path']
 
     boiler_plate = f"""
     // {project_name}
@@ -151,13 +144,11 @@ elif '.go' in argument:
 elif '.ts' in argument:
     extension = '.ts'
     language = 'typescript'
-    root_folder = config['projects']['typescript_projects_path']
     boiler_plate = f"// {project_name}\n"
 
 elif '.cs' in argument and not '.css' in argument:
     extension = '.cs'
     language = 'c#'
-    root_folder = config['projects']['c#_projects_path']
     boiler_plate = f"""
     // {project_name}
     
@@ -173,6 +164,13 @@ elif '.cs' in argument and not '.css' in argument:
 
 else:
     print('Unknown Project')
+    exit(1)
+
+try:
+    root_folder = config['projects'][f'{language}_projects_path']
+except KeyError:
+    print(bg.RED + 'ERR' + bg.RESET + " " + F'{language.title()} Projects path is not specified.')
+    print(bg.BLUE + 'INFO' + bg.RESET + " " + F'Please add the path to the config.json file or run the {fc.CYAN}pycmd setup projects{fc.RESET} command.')
     exit(1)
 
 
@@ -311,7 +309,7 @@ if language == 'web':
     open('index.js', 'w').close()
     open('style.css', 'w').close()
 
-elif language == 'javascript':
+elif language == 'node.js':
     with open(f'index.js', 'w') as file:
         file.write(boiler_plate)
         file.close()
@@ -344,16 +342,22 @@ if not '-local' in flags and not '-l' in flags:
         git_init(project_name)
 
 # Open project
+try:
+    text_editor = config['text-editor']
+except KeyError:
+    print(bg.YELLOW + fc.BLACK + '\rWARNING' +fc.RESET +  bg.RESET + " " + 'No text editor specified in config.json')
+    print(f'Set the default text editor to open the project with the {fc.CYAN}pycmd setup editor{fc.RESET} command.')
+    exit()
 
-if config['text-editor'] == 'Visual Studio Code':
+if text_editor == 'Visual Studio Code':
     os.system(f'code {project_path}')
-elif config['text-editor'] == 'Vim':
+elif text_editor == 'Vim':
     os.system(f'vim {project_path}')
-elif config['text-editor'] == 'Sublime Text':
+elif text_editor == 'Sublime Text':
     os.system(f'subl {project_path}')
-elif config['text-editor'] == 'Atom':
+elif text_editor == 'Atom':
     os.system(f'atom {project_path}')
-elif config['text-editor'] == 'Emacs':
+elif text_editor == 'Emacs':
     os.system(f'emacs {project_path}')
-elif config['text-editor'] == 'Nano':
+elif text_editor == 'Nano':
     os.system(f'nano {project_path}')
