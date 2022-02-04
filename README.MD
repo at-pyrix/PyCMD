@@ -192,5 +192,5 @@ SOFTWARE.
 > However, this will only change the name to use PYCMD, all the commands will still use the `PyCMD` name.
 ---
 
-*heavily inspired by npm cli*
+*inspired by npm and heroku cli*
 

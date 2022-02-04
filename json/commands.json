@@ -64,7 +64,7 @@
 	{
 		"name": "setup",
 		"description": "Configure PYCMD, your preferences",
-		"parameters": ["git"],
+		"parameters": ["git", "projects", "editor"],
 		"usage": "setup",
 		"example": "pycmd setup git"
 	}

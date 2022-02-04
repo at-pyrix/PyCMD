@@ -87,7 +87,7 @@ elif '.java' in argument:
     }}   
     """
 
-elif '.html' in argument or '.css' in argument:
+elif '.html' in argument or '.css' in argument or '.web' in argument:
     language = 'web'
     root_folder = config['projects']['web_projects_path']
     boiler_plate = f"""
@@ -214,7 +214,7 @@ def git_init(name, private: bool = False):
     load_anim.start()
     try:
         user.create_repo(name, private=private)
-        commands = [{'cd ' + os.path.join(root_folder, project_name): 'Changing directory to ' + os.path.relpath(os.path.join(root_folder, project_name))},
+        commands = [{'cd ' + project_path: 'Changing directory to ' + os.path.relpath(project_path)},
                     {'git init': 'Initializing git repository'},
                     {f'git remote add origin https://github.com/{user.login}/{project_name}.git': 'Connecting to remote repository'},
                     {'git add -A': 'Adding files'},
@@ -272,7 +272,7 @@ if '-y' not in flags:
             elif key == b'y':
                 global continued
                 print("\r" + fc.YELLOW + "\rCreating project in " +
-                      os.path.join(root_folder, project_name))
+                      project_path)
                 continued = True
                 break
 
@@ -295,9 +295,11 @@ if '-y' not in flags:
 
 print(fc.MAGENTA + '\nGenerating boiler plate...')
 
+project_path = os.path.join(root_folder, project_name)
+
 try:
-    os.mkdir(os.path.join(root_folder, project_name))
-    os.chdir(os.path.join(root_folder, project_name))
+    os.mkdir(project_path)
+    os.chdir(project_path)
 except Exception as e:
     print(bg.RED + '\rERR' + bg.RESET + " " + str(e).split('] ')[1] + " " * 20)
     exit(1)
@@ -324,10 +326,8 @@ elif language == 'javascript':
         print(output.stderr.decode('unicode_escape'))
         print('\nSkipping...')
 
-
-# TODO: FIX THIS RIGHT NOW!
 else:
-    with open(project_name + extension, 'w') as file:
+    with open('index' + extension, 'w') as file:
         file.write(boiler_plate)
         file.close()
 
@@ -344,5 +344,16 @@ if not '-local' in flags and not '-l' in flags:
         git_init(project_name)
 
 # Open project
-# Currently only supporting VSCODE
-os.system(f'code {os.path.join(root_folder, project_name)}')
+
+if config['text-editor'] == 'Visual Studio Code':
+    os.system(f'code {project_path}')
+elif config['text-editor'] == 'Vim':
+    os.system(f'vim {project_path}')
+elif config['text-editor'] == 'Sublime Text':
+    os.system(f'subl {project_path}')
+elif config['text-editor'] == 'Atom':
+    os.system(f'atom {project_path}')
+elif config['text-editor'] == 'Emacs':
+    os.system(f'emacs {project_path}')
+elif config['text-editor'] == 'Nano':
+    os.system(f'nano {project_path}')

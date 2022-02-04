@@ -16,211 +16,18 @@ dotenv.load_dotenv()
 # WARNING: SUPER UGLY CODE AHEAD
 
 
-config = {"is_setup": True, "projects": {}}
+config = {"is_setup": False}
 
 
-# Sorry for this:
-def setup():
-    print(f"\n\n{fc.CYAN}PYCMD Setup")
-
-# I know this is super ugly, but I'm sticking with it for now.
-# Really sorry
-
-    print(textwrap.dedent(f"""
-    This script will help you to setup your PYCMD environment.
-    It saves your configuration in "config.json" in the json directory. 
-
-    After you have finished the setup, run `pycmd --help`
-    to get the list of commands and usage.    
-
-    You can change these settings anytime.
-
-    {fc.LIGHTBLACK_EX}Ctrl^C to exit.
-    """))
-
-    print("── Press any key to continue ──", end="\r")
-    if msvcrt.getch() == b'\x03':
-        raise KeyboardInterrupt
-
-    print("\r" + fc.LIGHTWHITE_EX +
-          "Which programming languages do you work with?")
-    print(fc.LIGHTBLACK_EX + "Seperate multiple answers with a comma (,)\n")
-
-    languages_supported = ['Python', 'C++',
-                           'C#', 'Java', 'Go', 'Rust', 'Node.js', 'TypeScript', 'Web (HTML, CSS, JS)', 'Other']
-
-    for i in languages_supported:
-        print(f"{fc.LIGHTBLACK_EX}•{fc.LIGHTBLUE_EX} {i}")
-        sleep(0.05)
-    print()
-
-    languages_wanted = [i.lower().strip() for i in input(
-        fc.CYAN + "» " + fc.GREEN).split(",")]
-    print(fc.RESET)
-
-    languages_got = []
-
-    for lang in languages_wanted:
-        i = autocorrect(lang, languages_supported)
-
-        # Abbreviations
-        if lang == 'css' or lang == 'html' or lang == 'web':
-            i = 'Web (HTML, CSS, JS)'
-        if lang == 'js' or lang == 'javascript':
-            i = 'Web (HTML, CSS, JS)'
-        if lang == 'ts' or lang == 'typescript':
-            i = 'TypeScript'
-        if lang == 'py' or lang == 'python':
-            i = 'Python'
-        if lang == 'go' or lang == 'golang':
-            i = 'Go'
-        if lang == 'node' or lang == 'nodejs':
-            i = 'Node.js'
-        if lang == 'rust' or lang == 'rs':
-            i = 'Rust'
-        if lang == 'c++' or lang == 'cpp':
-            i = 'C++'
-
-        if i in languages_supported:
-            languages_got.append(i)
-
-    languages_got = list(set(languages_got))
-
-    if languages_got == ['Other']:
-        print("\r" + fc.LIGHTWHITE_EX +
-              "What programming language do you work with?")
-        selection = input(fc.CYAN + "» " + fc.GREEN)
-        languages_got = [selection]
-
-    if not languages_got:
-        print(fc.LIGHTRED_EX + "Whoops!")
-        print("Looks like we don't support any of those languages.")
-        print("Here, have a cookie: 🍪\n")
-        print('You can help us by adding it to the list of supported languages.')
-        print(f'{fc.BLUE}https://www.github.com/Yasho022/pycmd/issues/new')
-        exit(1)
-
-    else:
-        print(fc.GREEN + ', '.join(languages_got))
-
-    print(fc.LIGHTWHITE_EX + "\nDo you organize your projects in folders? (Y/n)")
-    response = input(fc.CYAN + "» " + fc.RESET).lower()
-
-    if response == "y" or response == "yes":
-        print(fc.GREEN + "\nAwesome! Let's set up your project folders.")
-        print(fc.LIGHTBLACK_EX + "─" * 58)
-        print(fc.LIGHTBLACK_EX +
-              "Select the folder from the popup\n(maybe it's already open but not in focus)")
-
-        try:
-            for i in languages_got:
-                if "Web" in i:
-                    i = "Web"
-                print(fc.LIGHTWHITE_EX +
-                      f"\nWhere do you save all your {i} projects?")
-                print(fc.CYAN + "» " + fc.GREEN, end="\r")
-                path = get_path()
-                print(fc.CYAN + "» " + fc.GREEN + path)
-                if i == "HTML + CSS":
-                    i = "web"
-                config['projects'][f'{i.lower()}_projects_path'] = path
-        except:
-            print(fc.CYAN + "» " +
-                  fc.RED + "You didn't select a folder :/")
-            exit(1)
-
-    else:
-        print("\nWe got you covered! We'll create the folders for you.")
-        print(fc.LIGHTBLACK_EX +
-              "Select the folder from the popup\n(maybe it's already open but not in focus)")
-        print(fc.LIGHTWHITE_EX +
-              "\nAlright, just tell us your root folder where you save all your projects.")
-        print(fc.CYAN + "» " + fc.GREEN, end="\r")
-        root_folder = get_path()
-
-        if root_folder is None:
-            print(fc.CYAN + "» " + fc.RED + "No folder selected :/")
-            print(
-                fc.GREEN + "\nNevermind, we'll do that too. We'll just use the PYCMD/Projects directory.")
-            print(fc.LIGHTWHITE_EX +
-                  "\nIf you're okay with that, press [Y] to continue.")
-            key = msvcrt.getch()
-            if key.lower() == b'y':
-                os.mkdir('Projects')
-                root_folder = os.path.abspath('Projects')
-            else:
-                print(fc.RED + "Sorry, we can't continue without a root folder.")
-                exit(1)
-
-        print(fc.CYAN + "» " + fc.GREEN + root_folder)
-        print()
-        for i in languages_got:
-            if "Web" in i:
-                i = "Web"
-            folder = os.path.join(root_folder, i)
-
-            try:
-                os.mkdir(folder)
-            except FileExistsError:
-                pass
-
-            config['projects'][f'{i.lower()}_projects_path'] = folder
-
-            print(
-                f"{fc.MAGENTA}Created folder for {fc.YELLOW}{i} Projects{fc.LIGHTBLACK_EX}:{fc.RESET} {folder}")
-
-    print("\nOne more step before we complete the setup.")
-
-
-def git_setup():
-    print("\n" + fc.GREEN + "GIT Setup\n")
-
-    valid = False
-
-    print('\nThis is so PYCMD can initialize and delete git repositories.\n')
-    print(
-        f"Get your GitHub token from {fc.BLUE}https://github.com/settings/tokens/new")
-    print("and give it the following scopes:\n")
-
-    scopes = {'repo': ['repo:status', 'repo_deployment', 'public_repo',
-                       'repo:invite', 'security_events'], 'delete_repo': ['delete_repo']}
-
-    for i in scopes:
-        print(
-            f"{fc.LIGHTBLACK_EX}•{fc.LIGHTBLUE_EX} {i}{fc.LIGHTBLACK_EX}: {fc.GREEN}{', '.join(scopes[i])}")
-    print('\nSet the expiration date to atleast a month or you will be asked to re-authenticate.')
-    print('You can also do this in the .env file.')
-    print('\n' + fc.LIGHTWHITE_EX + "Press [Y] to continue.", end="\r")
-    response = msvcrt.getch().decode()
-
-    if response.lower() == 'n':
-        config['is_setup'] = False
-
-    else:
-        print(fc.LIGHTWHITE_EX + '\nWhat is your GitHub token?')
-        github_token = getpass(fc.CYAN + "» " + fc.GREEN)
-
-        headers = {
-            'Authorization': f'token {github_token}',
-        }
-
-        response = requests.head(
-            f'https://api.github.com/', headers=headers)
-        token_valid = response.status_code == 200
-
-        if token_valid:
-            print(
-                fc.GREEN + '\nGreat! We\'ll use this token to authenticate with GitHub.\n')
-            dotenv.set_key(dotenv.find_dotenv(), 'GITHUB_TOKEN', github_token)
-        else:
-            print('\n' + fc.RED + 'Invalid token. Git Setup Incomplete')
-
-
-def autocorrect(word, word_list, tolerance=0.6):
+def autocorrect(word: str, word_list: list[str], tolerance: float = 0.6) -> str:
+    # Returns autocorrected word from the word_list
+    # If no match is found, returns the original word
+    # Tolerance is the strictness of the match.
+    # Lower tolerance = more strict
     for filter_word in word_list:
         if SequenceMatcher(a=word, b=filter_word).ratio() > tolerance:
             return filter_word
-    return None
+    return word
 
 
 def get_path():
@@ -256,34 +63,268 @@ def getpass(prompt=''):
     return p_s
 
 
+def projects_setup():
+    global config
+    config = {"projects": {}}
+
+    print("\r" + fc.LIGHTWHITE_EX +
+          "Which programming languages do you work with?")
+    print(fc.LIGHTBLACK_EX + "Seperate multiple answers with a comma (,)\n")
+
+    languages_supported = ['Python', 'C++',
+                           'C#', 'Java', 'Go', 'Rust', 'Node.js', 'TypeScript', 'Web', 'Other']
+
+    for i in languages_supported:
+        if i == 'Web':
+            print(f'{fc.LIGHTBLACK_EX}•{fc.LIGHTBLUE_EX} {i} (HTML + CSS)')
+            continue
+        print(f"{fc.LIGHTBLACK_EX}•{fc.LIGHTBLUE_EX} {i}")
+        sleep(0.05)
+    print()
+
+    languages_wanted = [i.lower().strip() for i in input(
+        fc.CYAN + "» " + fc.GREEN).split(",")]
+    print(fc.RESET)
+
+    languages_got = []
+
+    for lang in languages_wanted:
+        i = autocorrect(lang, languages_supported)
+
+        # Abbreviations
+        if lang == 'css' or lang == 'html':
+            i = 'Web'
+        if lang == 'js' or lang == 'javascript':
+            i = 'Node.js'
+        if lang == 'ts':
+            i = 'TypeScript'
+        if lang == 'py':
+            i = 'Python'
+        if lang == 'go':
+            i = 'Go'
+        if lang == 'rs':
+            i = 'Rust'
+        if lang == 'cpp':
+            i = 'C++'
+
+        if i in languages_supported:
+            languages_got.append(i)
+
+    languages_got = list(set(languages_got))
+
+    if languages_got == ['Other']:
+        print("\r" + fc.LIGHTWHITE_EX +
+              "What programming language do you work with?")
+        selection = input(fc.CYAN + "» " + fc.GREEN)
+        languages_got = [selection]
+
+    if not languages_got:
+        print(fc.LIGHTRED_EX + "Whoops!")
+        print("Looks like we don't support any of those languages.")
+        print("Here, have a cookie: 🍪\n")
+        print('You can help us by adding it to the list of supported languages.')
+        print(f'{fc.BLUE}https://www.github.com/Yasho022/pycmd/issues/new')
+        exit(1)
+
+    else:
+        print(fc.GREEN + ', '.join(languages_got))
+
+    print(fc.LIGHTWHITE_EX + "\nDo you organize your projects in folders? (Y/n)")
+    print(fc.CYAN + "» " + fc.CYAN, end='')
+    response = msvcrt.getch()
+
+    if response == b"y":
+        print('\r' + fc.CYAN + f"» {fc.GREEN}Yes")
+        print(fc.GREEN + "\nAwesome! Let's set up your project folders.")
+        print(fc.LIGHTBLACK_EX + "─" * 58)
+        print(fc.LIGHTBLACK_EX +
+              "Select the folder from the folder input dialog\n(maybe it's already open but not in focus)")
+
+        try:
+            for i in languages_got:
+                print(fc.LIGHTWHITE_EX +
+                      f"\nWhere do you save all your {i} projects?")
+                print(fc.CYAN + "» " + fc.GREEN, end="\r")
+                path = get_path()
+                print(fc.CYAN + "» " + fc.GREEN + path)
+                config['projects'][f'{i.lower()}_projects_path'] = path
+        except:
+            print(fc.CYAN + "» " +
+                  fc.RED + "You didn't select a folder :/")
+            exit(1)
+
+    else:
+        print('\r' + fc.CYAN + f"» {fc.RED}No")
+        print("\nAlright! We'll create the folders for you.")
+        print(fc.LIGHTBLACK_EX +
+              "Select the folder from the folder input dialog\n(maybe it's already open but not in focus)")
+        print(fc.LIGHTWHITE_EX +
+              "\nAlright, just tell us your root folder where you save all your projects.")
+        print(fc.CYAN + "» " + fc.GREEN, end="\r")
+        root_folder = get_path()
+
+        if root_folder is None:
+            print(fc.CYAN + "» " + fc.RED + "No folder selected :/")
+            print(
+                fc.GREEN + "\nHmm... we'll just use the PYCMD/Projects directory.")
+            print(fc.LIGHTWHITE_EX +
+                  "\nIf you're okay with that, press [Y] to continue.")
+            key = msvcrt.getch()
+            if key.lower() == b'y':
+                os.mkdir('Projects')
+                root_folder = os.path.abspath('Projects')
+            else:
+                print(fc.RED + "Sorry, we can't continue without a root folder.")
+                exit(1)
+
+        print(fc.CYAN + "» " + fc.GREEN + root_folder)
+        print()
+        for i in languages_got:
+
+            folder = os.path.join(root_folder, i)
+
+            try:
+                os.mkdir(folder)
+
+            except FileExistsError:
+                pass
+
+            config['projects'][f'{i.lower()}_projects_path'] = folder
+
+            print(
+                f"{fc.MAGENTA}Created folder for {fc.YELLOW}{i} Projects{fc.LIGHTBLACK_EX}:{fc.RESET} {folder}")
+
+
+def git_setup():
+    print("\n" + fc.GREEN + "GIT Setup\n")
+
+    print('\nThis is so PYCMD can initialize and delete git repositories.\n')
+    print(
+        f"Get your GitHub token from {fc.BLUE}https://github.com/settings/tokens/new")
+    print("and give it the following scopes:\n")
+
+    scopes = {'repo': ['repo:status', 'repo_deployment', 'public_repo',
+                       'repo:invite', 'security_events'], 'delete_repo': ['All']}
+
+    for i in scopes:
+        print(
+            f"{fc.LIGHTBLACK_EX}•{fc.LIGHTBLUE_EX} {i}{fc.LIGHTBLACK_EX}: {fc.GREEN}{', '.join(scopes[i])}")
+    print('\nSet the expiration date to atleast a month or you will be asked to re-authenticate.')
+    print('You can also do this in the .env file.')
+    print('\n' + fc.LIGHTWHITE_EX + "Press [Y] to continue.", end="\r")
+    response = msvcrt.getch().decode()
+
+    if response.lower() == 'n':
+        config['is_setup'] = False
+
+    else:
+        print(fc.LIGHTWHITE_EX + '\nEnter your GitHub token?')
+        github_token = getpass(fc.CYAN + "» " + fc.GREEN)
+
+        token_valid = requests.head(
+            f'https://api.github.com/', headers={
+                'Authorization': f'token {github_token}',
+            }).status_code == 200
+
+        if token_valid:
+            print(
+                fc.GREEN + '\nGreat! We\'ll use this token to authenticate with GitHub.\n')
+            dotenv.set_key(dotenv.find_dotenv(), 'GITHUB_TOKEN', github_token)
+        else:
+            print('\n' + fc.RED + 'Invalid token. Git Setup Incomplete')
+
+
+def editor_setup():
+    global config
+    config = {'text-editor': ''}
+    print('\n' + fc.CYAN + 'Editor Setup\n')
+    print(fc.LIGHTWHITE_EX + '\nWhat is your preferred text editor?\n')
+    editors_available = ['Vim', 'GNU Nano', 'GNU Emacs',
+                         'Visual Studio Code', 'Sublime Text', 'Atom', 'Other']
+    for i in editors_available:
+        print(f'{fc.LIGHTBLACK_EX}•{fc.LIGHTBLUE_EX} {i}')
+
+    editor = autocorrect(input(f'\n{fc.CYAN}» {fc.GREEN}'), editors_available)
+
+    if 'code' in editor:
+        editor = 'Visual Studio Code'
+    elif 'nano' in editor:
+        editor = 'GNU Nano'
+    elif 'emacs' in editor:
+        editor = 'GNU Emacs'
+
+    print('\n' + editor)
+
+    if editor == 'Other' or editor not in editors_available:
+        print('Sorry we don\'t support any other text-editors or IDE at the moment.')
+        print('Here, Have a Potato: 🥔 (oh wait lemme cook it for you)')
+        print('Here, 🥔 + 🔥 -> 🍠')
+        exit(1)
+
+    config['text-editor'] = editor
+
+
+def save_to_json():
+    global config
+    json_location = os.path.abspath('json/config.json')
+
+    with open(json_location, 'r') as f:
+        data = json.load(f)
+        f.close()
+
+    data.update(config)
+
+    with open(json_location, 'w') as f:
+        json.dump(data, f, indent=4)
+        f.close()
+
+    print('\n' + fc.GREEN + "We've saved everything to the config ;)")
+    print("Here, have some bread: 🍞👍")
+
+
+# <-- MAIN PART --> (or I should say "clean part")
+
 try:
 
-    if "git" in sys.argv:
+    if "projects" in sys.argv:
+        projects_setup()
+        print('\n' + fc.CYAN + 'Setup complete!')
+        save_to_json()
+
+    elif "git" in sys.argv:
         git_setup()
-        print(fc.CYAN + '\nSetup complete!')
-        exit()
+        print('\n' + fc.CYAN + 'Setup complete!')
+
+    elif 'editor' in sys.argv:
+        editor_setup()
+        print('\n' + fc.CYAN + 'Setup complete!')
+        save_to_json()
+
     else:
-        setup()
+        print(f"\n\n{fc.CYAN}PYCMD Setup")
+
+        print(textwrap.dedent(f"""
+        This script will help you to setup your PYCMD environment.
+        It saves your configuration in "config.json" in the json directory. 
+
+        After you have finished the setup, run `pycmd --help`
+        to get the list of commands and usage.    
+
+        You can change these settings anytime.
+
+        {fc.LIGHTBLACK_EX}Ctrl^C to exit.
+        """))
+
+        print("── Press any key to continue ──", end="\r")
+        if msvcrt.getch() == b'\x03':
+            raise KeyboardInterrupt
+
+        projects_setup()
+        editor_setup()
         git_setup()
+        config['is_setup'] = True
+        save_to_json()
 
 except KeyboardInterrupt:
     print(fc.LIGHTRED_EX + '\n\nSetup cancelled.')
     exit(1)
-
-# ----Finishing the setup----
-
-json_location = os.path.abspath('json/config.json')
-
-with open(json_location, 'r') as f:
-    data = json.load(f)
-    f.close()
-
-data.update(config)
-
-with open(json_location, 'w') as f:
-    json.dump(data, f, indent=4)
-    f.close()
-
-print(fc.CYAN + '\rSetup complete!')
-print('\n' + fc.GREEN + "We've (I mean i've) saved everything to the config ;)")
-print("Here, have some bread: 🍞👍")
