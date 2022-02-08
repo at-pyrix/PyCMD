@@ -171,6 +171,7 @@ else:
     """))
     exit(1)
 
+
 try:
     root_folder = config['projects'][f'{language}_projects_path']
 except KeyError:
@@ -178,6 +179,7 @@ except KeyError:
     print(bg.BLUE + 'INFO' + bg.RESET + " " + F'Please add the path to the config.json file or run the {fc.CYAN}pycmd setup projects{fc.RESET} command.')
     exit(1)
 
+project_path = os.path.join(root_folder, project_name)
 
 end = False
 text = ''
@@ -297,11 +299,11 @@ if '-y' not in flags:
         sys.stdout.write('\r' + bg.BLUE + 'INFO' + bg.RESET + ' ' + f'Creating {language} project "{project_name}" in {fc.CYAN}{i}{fc.RESET} seconds')
         time.sleep(1)
     time_over = True
+print('\r' + ' ' * 40)
 
 print('\r')
 print(fc.MAGENTA + '\nGenerating boiler plate...')
 
-project_path = os.path.join(root_folder, project_name)
 
 try:
     os.mkdir(project_path)
@@ -318,7 +320,6 @@ if language == 'web':
     open('style.css', 'w').close()
     
 elif language == 'rust':
-    print('rust')
     output = run(f'cargo new {project_name}', shell=True, capture_output=True)
     if output.returncode != 0:
         print(bg.RED + '\rERR' + bg.RESET +
