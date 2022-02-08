@@ -43,6 +43,7 @@ with open("json/config.json", "r") as file:
     file.close()
 
 extension = ''
+boiler_plate = ''
 
 if '.py' in argument:
     extension = '.py'
@@ -104,16 +105,7 @@ elif '.html' in argument or '.css' in argument or '.web' in argument:
     """
 
 elif '.rs' in argument:
-    extension = '.rs'
     language = 'rust'
-
-    boiler_plate = f"""
-    // {project_name}
-    
-    fn main() {{
-        // Write your code here
-    }}
-    """
 
 elif '.cpp' in argument or '.c++' in argument:
     extension = '.cpp'
@@ -163,7 +155,20 @@ elif '.cs' in argument and not '.css' in argument:
     """
 
 else:
-    print('Unknown Project')
+    print(textwrap.dedent(f"""
+    {bg.RED}ERR{bg.RESET} {fc.RESET}Unknown project type.
+    See the list of projects below:
+    
+    {fc.LIGHTBLUE_EX}.py{fc.LIGHTBLACK_EX}   -  {fc.GREEN}Python Project
+    {fc.LIGHTBLUE_EX}.js{fc.LIGHTBLACK_EX}   -  {fc.GREEN}JavaScript Project
+    {fc.LIGHTBLUE_EX}.java{fc.LIGHTBLACK_EX} -  {fc.GREEN}Java Project
+    {fc.LIGHTBLUE_EX}.html{fc.LIGHTBLACK_EX} -  {fc.GREEN}Web Project
+    {fc.LIGHTBLUE_EX}.rs{fc.LIGHTBLACK_EX}   -  {fc.GREEN}Rust Project
+    {fc.LIGHTBLUE_EX}.cpp{fc.LIGHTBLACK_EX}  -  {fc.GREEN}C++ Project
+    {fc.LIGHTBLUE_EX}.go{fc.LIGHTBLACK_EX}   -  {fc.GREEN}Go Project
+    {fc.LIGHTBLUE_EX}.ts{fc.LIGHTBLACK_EX}   -  {fc.GREEN}TypeScript Project
+    {fc.LIGHTBLUE_EX}.cs{fc.LIGHTBLACK_EX}   -  {fc.GREEN}C# Project
+    """))
     exit(1)
 
 try:
@@ -252,9 +257,12 @@ boiler_plate = textwrap.dedent(boiler_plate).strip()
 # If you want to never get this warning, change this line to:
 
 """
-Original: `if '-y' not in flags:`
 
-Modified: `if False:`
+`if '-y' not in flags:`
+
+# Change to:
+
+`if False:`
 
 """
 if '-y' not in flags:
@@ -264,9 +272,9 @@ if '-y' not in flags:
             key = msvcrt.getch()
             if key == b'n':
                 global cancelled
-                print(fc.RED + '\rCancelled' + ' ' * 20)
+                print(fc.RED + '\rCancelled' + ' ' * 40)
                 cancelled = True
-                break
+                exit(1)
             elif key == b'y':
                 global continued
                 print("\r" + fc.YELLOW + "\rCreating project in " +
@@ -274,10 +282,9 @@ if '-y' not in flags:
                 continued = True
                 break
 
-    print(fc.LIGHTBLACK_EX +
-          "\nYou can skip this delay by passing the '-y' flag. Example: pycmd create test.py -y")
+    print('\n')
     print(
-        f"Press {fc.LIGHTWHITE_EX}'Y'{fc.RESET} to continue or {fc.LIGHTWHITE_EX}'N'{fc.RESET} to cancel.")
+        f"Press {fc.CYAN}Y{fc.RESET} to continue or {fc.CYAN}'N'{fc.RESET} to cancel.\n")
     cancelled = False
     time_over = False
     continued = False
@@ -287,10 +294,11 @@ if '-y' not in flags:
             exit(0)
         if continued:
             break
-        sys.stdout.write(f'\rCreating project in {fc.CYAN}{i}{fc.RESET}...')
+        sys.stdout.write('\r' + bg.BLUE + 'INFO' + bg.RESET + ' ' + f'Creating {language} project "{project_name}" in {fc.CYAN}{i}{fc.RESET} seconds')
         time.sleep(1)
     time_over = True
 
+print('\r')
 print(fc.MAGENTA + '\nGenerating boiler plate...')
 
 project_path = os.path.join(root_folder, project_name)
@@ -308,6 +316,17 @@ if language == 'web':
         file.close()
     open('index.js', 'w').close()
     open('style.css', 'w').close()
+    
+elif language == 'rust':
+    print('rust')
+    output = run(f'cargo new {project_name}', shell=True, capture_output=True)
+    if output.returncode != 0:
+        print(bg.RED + '\rERR' + bg.RESET +
+            " " + 'While creating rust project' + " " * 20)
+        print(bg.BLUE + fc.BLACK + 'INFO' + fc.RESET + bg.RESET + ' ' +
+            f'While executing: {fc.CYAN}"' + f'cargo new {project_name}' + f'"{fc.RESET}: \n')
+        print(output.stderr.decode('unicode_escape'))
+        print(fc.RED + '\nAbort..')
 
 elif language == 'node.js':
     with open(f'index.js', 'w') as file:

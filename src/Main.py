@@ -4,12 +4,12 @@ import sys
 import msvcrt
 import json
 from difflib import SequenceMatcher
-from colorama import Fore as fc, Style as st, init
+from colorama import Fore as fc, init
 init(autoreset=True)
 
 version = "1.0"
 
-os.chdir(os.path.dirname(os.path.realpath(__file__)))
+os.chdir(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
 
 
 def argparse(args: list):
