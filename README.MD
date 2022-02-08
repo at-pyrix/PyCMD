@@ -26,7 +26,7 @@
 
 ### Why PyCMD?
 
-PYCMD helps you create, delete, manage, and list your projects super-fast ⚡
+PYCMD helps you create, manage and do cool stuff your projects super-fast ⚡
 
 **Here's how things are faster with PYCMD**
   <!-- TODO: SHOW COMPARISION WITH GIF -->
