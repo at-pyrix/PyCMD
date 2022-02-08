@@ -130,7 +130,7 @@ pls tell me about bugs in the code. I don't even use light mode.
 
 .　　 。　　　　　  。 . 　　 • 　　　　•<br>
 
- . Hey look, you could be the first one!　 。<br>
+ . 　**Hey look, you could be the first one!**　 。<br>
 
 　　ﾟ　　　.　　　. ,　　　　.　 .<br>
 　　.　　　 　　.　　　　　。　　 。　. 　
