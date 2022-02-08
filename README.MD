@@ -33,7 +33,6 @@ PYCMD helps you create, manage and do cool stuff your projects super-fast ⚡
 
 
 PYCMD only supports `Windows` at the moment.<br>
-`Python 3.6+` is required.<br>
 
 [*Or if you're smart you can make it work on unix platforms ;​)*](https://www.github.com/Yasho022/Pycmd/fork)
 
@@ -75,6 +74,7 @@ PYCMD only supports `Windows` at the moment.<br>
   ```
 ### Requirements
 - [Python 3+ (Tested on 3.9.9)](https://www.python.org/downloads/)
+- [Windows](https://www.microsoft.com/en-in/windows)
 - [Pip](https://pypi.org/project/pip/)
 - [Git](https://git-scm.com/downloads)
 - [VS Code](https://code.visualstudio.com/download)
