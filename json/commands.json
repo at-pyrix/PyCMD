@@ -10,7 +10,7 @@
 			"java"
 		],
 		"example": "pycmd create google.html -p",
-		"flags": "-p -private, -l  -local -y"
+		"flags": "-p -private, -l  -local, -y (no prompt)"
 	},
 	{
 		"name": "ls",
@@ -30,11 +30,6 @@
 		"description": "Display help for a command",
 		"usage": "help [command]",
 		"example": "pycmd help ls"
-	},
-	{
-		"name": "version",
-		"description": "Display version information",
-		"usage": "pycmd version"
 	},
 	{
 		"name": "rm",
@@ -58,7 +53,7 @@
 			"web/html",
 			"java"
 		],
-		"usage": "open [project_name]",
+		"usage": "open [project_name].[extension] [flags]",
 		"example": "pycmd open hack_elon_musk.py",
 		"flags": "-e (To open with explorer)"
 	},
@@ -66,7 +61,14 @@
 		"name": "setup",
 		"description": "Configure PYCMD, your preferences",
 		"parameters": ["git", "projects", "editor"],
-		"usage": "setup",
+		"usage": "setup [git|projects|editor]",
 		"example": "pycmd setup git"
+	},
+	{
+		"name": "src",
+		"description": "Open the PYCMD source code",
+		"usage": "src [flags]",
+		"example": "pycmd src -e",
+		"flags": "-e (To open with explorer)"
 	}
 ]
