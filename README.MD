@@ -1,7 +1,5 @@
 <h1 align=center> PyCMD - A CLI tool</h1>
 
-This project will soon be migrated to use `node.js` so the installation would be much simpler :​D
-
 ## ToDo:
 - Add the `rm` command
 - Add the `ren` command
@@ -28,14 +26,13 @@ This project will soon be migrated to use `node.js` so the installation would be
 
 ### Why PyCMD?
 
-PYCMD helps you create, delete, manage, and list your projects super-fast ⚡
+PYCMD helps you create, manage and do cool stuff your projects super-fast ⚡
 
 **Here's how things are faster with PYCMD**
   <!-- TODO: SHOW COMPARISION WITH GIF -->
 
 
 PYCMD only supports `Windows` at the moment.<br>
-`Python 3.6+` is required.<br>
 
 [*Or if you're smart you can make it work on unix platforms ;​)*](https://www.github.com/Yasho022/Pycmd/fork)
 
@@ -77,6 +74,7 @@ PYCMD only supports `Windows` at the moment.<br>
   ```
 ### Requirements
 - [Python 3+ (Tested on 3.9.9)](https://www.python.org/downloads/)
+- [Windows](https://www.microsoft.com/en-in/windows)
 - [Pip](https://pypi.org/project/pip/)
 - [Git](https://git-scm.com/downloads)
 - [VS Code](https://code.visualstudio.com/download)
@@ -111,8 +109,8 @@ pycmd create hello_world.py -private -y
 ## Contribute 💖
 
 #### How do I contribute?
-First of all, thank you kind gentlemen for contributing to PyCMD. You're awesome! ;​)
-<!-- btw this (";​)") is zero-width space -->
+Thank you kind person for contributing to PyCMD. You're awesome! ;​)
+<!-- btw this (`​`) is zero-width space -->
 
 Here are some ways you can help:
 
@@ -128,9 +126,14 @@ pls tell me about bugs in the code. I don't even use light mode.
 
 
 ### Contributers:
-._.
+. 　　　。　　　　•　 　ﾟ　　。 　　.<br>
 
-Hey look, you could be the first one!
+.　　 。　　　　　  。 . 　　 • 　　　　•<br>
+
+ . 　**Hey look, you could be the first one!**　 。<br>
+
+　　ﾟ　　　.　　　. ,　　　　.　 .<br>
+  .　　　 　　.　　　　　。　　 。　. 　
 
 
 ## License 🔑
