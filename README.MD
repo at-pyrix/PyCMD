@@ -109,8 +109,8 @@ pycmd create hello_world.py -private -y
 ## Contribute 💖
 
 #### How do I contribute?
-First of all, thank you kind gentlemen for contributing to PyCMD. You're awesome! ;​)
-<!-- btw this (";​)") is zero-width space -->
+Thank you kind person for contributing to PyCMD. You're awesome! ;​)
+<!-- btw this (`​`) is zero-width space -->
 
 Here are some ways you can help:
 
