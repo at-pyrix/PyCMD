@@ -126,9 +126,14 @@ pls tell me about bugs in the code. I don't even use light mode.
 
 
 ### Contributers:
-._.
+. 　　　。　　　　•　 　ﾟ　　。 　　.
 
-Hey look, you could be the first one!
+.　　 。　　　　　  。 . 　　 • 　　　　•
+
+ Hey look, you could be the first one!　 。　.
+
+　　ﾟ　　　.　　　. ,　　　　.　 .
+　　　.　　　 　　.　　　　　。　　 。　. 　
 
 
 ## License 🔑
