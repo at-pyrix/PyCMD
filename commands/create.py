@@ -267,6 +267,15 @@ boiler_plate = textwrap.dedent(boiler_plate).strip()
 `if False:`
 
 """
+print()
+
+if '-l' in flags or '-local' in flags:
+    print(f'Git: {fc.RED}Not Initializing')
+else:
+    private = True if '-p' in flags or '-private' in flags else False
+    print(f'Git: {fc.GREEN}Initializing {fc.LIGHTBLUE_EX}private {fc.GREEN}repository' 
+          if private 
+          else f'Git: {fc.GREEN}Initializing {fc.LIGHTBLUE_EX}public {fc.GREEN}repository' + fc.RESET)
 if '-y' not in flags:
 
     def listen_to_keyboard():
@@ -279,14 +288,13 @@ if '-y' not in flags:
                 exit(1)
             elif key == b'y':
                 global continued
-                print("\r" + fc.YELLOW + "\rCreating project in " +
-                      project_path)
+                print("\r" + fc.YELLOW + "Creating project in " +
+                      project_path + ' ' * 50)
                 continued = True
                 break
 
-    print('\n')
     print(
-        f"Press {fc.CYAN}Y{fc.RESET} to continue or {fc.CYAN}'N'{fc.RESET} to cancel.\n")
+        f"Press {fc.CYAN}Y{fc.RESET} to continue or {fc.CYAN}N{fc.RESET} to cancel.\n")
     cancelled = False
     time_over = False
     continued = False
@@ -298,12 +306,9 @@ if '-y' not in flags:
             break
         sys.stdout.write('\r' + bg.BLUE + 'INFO' + bg.RESET + ' ' + f'Creating {language} project "{project_name}" in {fc.CYAN}{i}{fc.RESET} seconds')
         time.sleep(1)
-    time_over = True
-print('\r' + ' ' * 50)
+    time_over = True  
 
-print('\r')
-print(fc.MAGENTA + '\nGenerating boiler plate...')
-
+print(fc.MAGENTA + '\rCreating Directories...' + ' ' * 50)
 
 try:
     os.mkdir(project_path)
@@ -353,7 +358,7 @@ with open('README.MD', 'w') as file:
     file.write('# ' + project_name)
     file.close()
 
-print(fc.GREEN + 'Successfully generated boiler plate')
+print(fc.GREEN + 'Successfully generated files')
 
 if not '-local' in flags and not '-l' in flags:
     if '-private' in flags or '-p' in flags:
