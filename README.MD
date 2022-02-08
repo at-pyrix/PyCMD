@@ -126,13 +126,13 @@ pls tell me about bugs in the code. I don't even use light mode.
 
 
 ### Contributers:
-. 　　　。　　　　•　 　ﾟ　　。 　　.
+. 　　　。　　　　•　 　ﾟ　　。 　　.<br>
 
-.　　 。　　　　　  。 . 　　 • 　　　　•
+.　　 。　　　　　  。 . 　　 • 　　　　•<br>
 
- Hey look, you could be the first one!　 。　.
+ Hey look, you could be the first one!　 。　.<br>
 
-　　ﾟ　　　.　　　. ,　　　　.　 .
+　　ﾟ　　　.　　　. ,　　　　.　 .<br>
 　　　.　　　 　　.　　　　　。　　 。　. 　
 
 
