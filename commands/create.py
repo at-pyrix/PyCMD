@@ -274,7 +274,7 @@ if '-y' not in flags:
             key = msvcrt.getch()
             if key == b'n':
                 global cancelled
-                print(fc.RED + '\rCancelled' + ' ' * 40)
+                print(fc.RED + '\rCancelled' + ' ' * 50)
                 cancelled = True
                 exit(1)
             elif key == b'y':
@@ -299,7 +299,7 @@ if '-y' not in flags:
         sys.stdout.write('\r' + bg.BLUE + 'INFO' + bg.RESET + ' ' + f'Creating {language} project "{project_name}" in {fc.CYAN}{i}{fc.RESET} seconds')
         time.sleep(1)
     time_over = True
-print('\r' + ' ' * 40)
+print('\r' + ' ' * 50)
 
 print('\r')
 print(fc.MAGENTA + '\nGenerating boiler plate...')
