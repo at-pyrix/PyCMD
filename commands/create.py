@@ -350,7 +350,7 @@ elif language == 'node.js':
         print('\nSkipping...')
 
 else:
-    with open('index' + extension, 'w') as file:
+    with open('main' + extension, 'w') as file:
         file.write(boiler_plate)
         file.close()
 

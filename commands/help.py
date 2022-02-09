@@ -96,4 +96,4 @@ print(fc.LIGHTBLACK_EX + "└" + "─"*28 + "┴" + "─"*45 + "┘")
 """
 
 print("\nFor more information on a specific command, type:")
-print(f"{fc.LIGHTRED_EX}$ {fc.YELLOW}pycmd {fc.LIGHTBLUE_EX}<command>{fc.LIGHTBLACK_EX} --help")
+print(f"{fc.LIGHTBLACK_EX}${fc.YELLOW} pycmd{fc.LIGHTBLUE_EX} help{fc.GREEN} <command>{fc.RESET}")

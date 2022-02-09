@@ -35,19 +35,19 @@ def help(command: str):
         if i['name'] == command:
             if 'description' in i:
                 print(" "*(2) +
-                    f'\n{fc.YELLOW}{i["description"]}\n')
+                      f'\n{fc.YELLOW}{i["description"]}\n')
             if 'usage' in i:
                 print(" "*(2) +
-                    f'{fc.GREEN}Usage:' + " "*(15 -len('Usage:')) +  f'{fc.RESET}{i["usage"]}')
+                      f'{fc.GREEN}Usage:' + " "*(15 - len('Usage:')) + f'{fc.RESET}{i["usage"]}')
             if 'parameters' in i:
                 print(" "*(2) +
-                    f'{fc.GREEN}Parameters:' + " "*(15 -len('Parameters:')) +  f'{fc.RESET}{", ".join(i["parameters"])}')
+                      f'{fc.GREEN}Parameters:' + " "*(15 - len('Parameters:')) + f'{fc.RESET}{", ".join(i["parameters"])}')
             if 'flags' in i:
                 print(" "*(2) +
-                    f'{fc.GREEN}Flags:' + " "*(15 -len('Flags:')) +  f'{fc.RESET}{i["flags"]}')
+                      f'{fc.GREEN}Flags:' + " "*(15 - len('Flags:')) + f'{fc.RESET}{i["flags"]}')
             if 'example' in i:
                 print(" "*(2) +
-                    f'{fc.GREEN}Example:' + " "*(15 -len('Example:')) +  f'{fc.RESET}{i["example"]}')
+                      f'{fc.GREEN}Example:' + " "*(15 - len('Example:')) + f'{fc.RESET}{i["example"]}')
 
 
 def autocorrect(word, word_list, tolerance=0.4):
@@ -70,6 +70,13 @@ def execute(command: str, parameter: str, flags: list):
     if "-help" in flags or "-h" in flags:
         help(command)
         return 0
+    
+    elif command == "help":
+        if parameter != ".":
+            help(parameter)
+        else:
+            os.system('python commands/help.py')
+        return 0
 
     if os.path.exists(f'commands/{command}.py'):
         os.system(
@@ -87,7 +94,8 @@ def execute(command: str, parameter: str, flags: list):
                 print(fc.LIGHTGREEN_EX + 'Yes  \n')
                 execute(corrected, parameter, flags)
             else:
-               print(f'Run {fc.CYAN}pycmd help{fc.RESET} for list of commands.')
+                print(
+                    f'Run {fc.CYAN}pycmd help{fc.RESET} for list of commands.')
         else:
             print(
                 f'\nCommand {fc.LIGHTBLACK_EX}"{command}{fc.LIGHTBLACK_EX}"{fc.RESET} not found.')
