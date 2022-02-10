@@ -30,25 +30,26 @@
 
 PYCMD helps you create, manage and do cool stuff your projects super-fast ⚡
 
-**Here's how things are faster with PYCMD**
+**Here's how fast things are with PYCMD**
   <!-- TODO: SHOW COMPARISION WITH GIF -->
 
 
-PYCMD only supports `Windows` at the moment.<br>
-
-[*Or if you're smart you can make it work on unix platforms ;​)*](https://www.github.com/Yasho022/Pycmd/fork)
-
 ## Installation:
-- Clone the repo:
+- ⬇️ Clone the repo:
 
   ```console
   git clone https://www.github.com/Yasho/PyCMD.git
   ```
-- Install the dependencies:
+- ⚙️ Add the `bin` folder to your `PATH` environment variable.: 
+
+  *I had to make a batch file to get the abspath of the folder.*
 
   ```console
-  pip install -r requirements.txt
+  cd pycmd
+  ./add_to_path
+  rm ./add_to_path.cmd
   ```
+<!--
 <ul><li>
 <details>
   <summary>
@@ -69,17 +70,21 @@ PYCMD only supports `Windows` at the moment.<br>
 </li>
 </ul>
 
-- Run the `pycmd setup` command and follow the on-screen instructions.
+-->
+- 🔃 **Restart your terminal** for the changes to take effect
+
+- ✅ Run the `pycmd setup` command and follow the on-screen instructions.
 
   ```console
   pycmd setup
   ```
 ### Requirements
 - [Python 3+ (Tested on 3.9.9)](https://www.python.org/downloads/)
-- [Windows](https://www.microsoft.com/en-in/windows)
 - [Pip](https://pypi.org/project/pip/)
 - [Git](https://git-scm.com/downloads)
-- [VS Code](https://code.visualstudio.com/download)
+- [Windows](https://www.microsoft.com/en-in/windows)
+
+[*Or if you're smart you can make it work on unix platforms ;​)*](https://www.github.com/Yasho022/Pycmd/fork)
 
 ## Commands
 
@@ -87,6 +92,7 @@ PYCMD only supports `Windows` at the moment.<br>
 |---------|-------------|
 | `pycmd` | Run the PyCMD command line interface. |
 | `pycmd help` | Display help information. |
+| `pycmd version` | Display the version number. |
 | `pycmd setup` | Setup PyCMD. |
 | `pycmd ls` | List all projects. |
 | `pycmd open` | Open a project. |
@@ -98,7 +104,7 @@ PYCMD only supports `Windows` at the moment.<br>
 Use `pycmd` to run the command line interface.
 
 Usage:
-```console
+```
 $ pycmd <command> <parameter> --<flags> 
 ```
 
@@ -111,17 +117,15 @@ pycmd create hello_world.py -private -y
 ## Contribute 💖
 
 #### How do I contribute?
-Thank you kind person for contributing to PyCMD. You're awesome! ;​)
+Thank you  for contributing to PyCMD
 <!-- btw this (`​`) is zero-width space -->
 
 Here are some ways you can help:
 
 - [x]  Readme
-- [ ] Update CLI help command
-- [ ] Make it work on other platforms
-- [ ] Other Language Support
+- [x] Update CLI help command
+- [ ] Unix Support
 - [ ] New Commands
-- [ ] Simplify Commands
 - [ ] `PYCMD Update` command which will merge the changes of a new release into your current branch. 
 
 pls tell me about bugs in the code. I don't even use light mode.
@@ -198,10 +202,24 @@ SOFTWARE.
 > You can change the name of `PyCMD` to something else by renaming the `pycmd.cmd` in the `bin` folder.
 > Example:
 > ```
-> ren bin/pycmd.cmd nevergonnagiveyouup.cmd
+> ren bin/pycmd.cmd bred.cmd
 > ```
 > However, this will only change the name to use PYCMD, all the commands will still use the `PyCMD` name.
+
 ---
+
+### Developer notes:
+
+If you encounter any problems feel free to [Contact me](#contact-me-)
+
+*I heard that emojis attract attention, don't mind me, I hate them too. (i have an official rivalry towards yellow circles)*
 
 *inspired by npm and heroku cli*
 
+### Contact Me 💌
+          
+<a href = "mailto:wiredhack022@gmail.com" target="_blank">
+<img src="https://img.shields.io/badge/wiredhack022@gmail.com-e9ff40?style=for-the-badge&amp;logo=gmail&amp;logoColor=black" alt="GMail">
+</a>
+<a href = "https://www.reddit.com/user/Yasho022" target="_blank">
+ <img src="https://img.shields.io/badge/NotYasho-ff4803?style=for-the-badge&amp;logo=reddit&amp;logoColor=white" alt = "Reddit">
