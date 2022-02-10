@@ -69,8 +69,14 @@ PYCMD helps you create, manage and do cool stuff your projects super-fast ⚡
 </details>
 </li>
 </ul>
-
 -->
+
+- ⚒️ Install the requirements:
+
+  ```console
+  pip install -r requirements.txt
+  ```
+  
 - 🔃 **Restart your terminal** for the changes to take effect
 
 - ✅ Run the `pycmd setup` command and follow the on-screen instructions.
