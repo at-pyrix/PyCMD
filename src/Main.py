@@ -1,4 +1,6 @@
 # Command Handler
+# This is the main script which handles all of the commands
+
 import os
 import sys
 import msvcrt
@@ -59,11 +61,12 @@ def autocorrect(word, word_list, tolerance=0.4):
 
 def execute(command: str, parameter: str, flags: list):
     # TODO: FIX THIS
+    
+    if "-v" in flags or "-version" in flags or command=="version":
+        print(f'PYCMD v{version}')
+        return 0
 
     if not command:
-        if "-v" in flags or "-version" in flags:
-            print(f'PYCMD v{version}')
-            return 0
         os.system("python commands/help.py help " + " ".join(flags))
         return 0
 

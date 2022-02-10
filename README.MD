@@ -1,10 +1,12 @@
 <h1 align=center> PyCMD - A CLI tool</h1>
 
-## ToDo:
+## TODO:
 - Add the `rm` command
 - Add the `ren` command
 - Add the `ls` command
 - Update `readme`
+- Make it linux compatible
+- Publish to PyPI
 
 ## Contents
 - [About](#description)
