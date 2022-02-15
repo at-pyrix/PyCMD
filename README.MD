@@ -31,7 +31,8 @@
 PYCMD helps you create, manage and do cool stuff your projects super-fast ⚡
 
 **Here's how fast things are with PYCMD**
-  <!-- TODO: SHOW COMPARISION WITH GIF -->
+
+![](images/comparision.gif)
 
 
 ## Installation:
