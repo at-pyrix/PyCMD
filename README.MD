@@ -32,7 +32,7 @@ PYCMD helps you create, manage and do cool stuff your projects super-fast ⚡
 
 **Here's how fast things are with PYCMD**
 
-![](images/comparision.gif)
+![](images/comparision-low.gif)
 
 
 ## Installation:
