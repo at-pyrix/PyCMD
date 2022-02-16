@@ -21,13 +21,9 @@ if editor == 'Explorer':
     os.system(f'explorer {pycmd_path}')
 elif editor == 'Visual Studio Code':
     os.system(f'code {pycmd_path}')
-elif editor == 'Vim':
-    os.system(f'vim {pycmd_path}')
 elif editor == 'Sublime Text':
     os.system(f'subl {pycmd_path}')
 elif editor == 'Atom':
     os.system(f'atom {pycmd_path}')
-elif editor == 'Emacs':
-    os.system(f'emacs {pycmd_path}')
-elif editor == 'Nano':
-    os.system(f'nano {pycmd_path}')
+else:
+    os.system(f'cd {pycmd_path} && {editor}')

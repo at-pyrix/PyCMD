@@ -84,15 +84,11 @@ else:
     
     print(fc.GREEN + f'Opening {project_name} with {editor}...')
     
-    if editor == 'Visual Studio Code':
-        os.system(f'code {project_path}')
-    elif editor == 'Vim':
-        os.system(f'vim {project_path}')
-    elif editor == 'Sublime Text':
-        os.system(f'subl {project_path}')
-    elif editor == 'Atom':
-        os.system(f'atom {project_path}')
-    elif editor == 'Emacs':
-        os.system(f'emacs {project_path}')
-    elif editor == 'Nano':
-        os.system(f'nano {project_path}')
+if editor == 'Visual Studio Code':
+    os.system(f'code {project_path}')
+elif editor == 'Sublime Text':
+    os.system(f'subl {project_path}')
+elif editor == 'Atom':
+    os.system(f'atom {project_path}')
+else:
+    os.system(f'cd {project_path} && {editor}')

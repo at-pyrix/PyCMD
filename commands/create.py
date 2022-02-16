@@ -175,8 +175,10 @@ else:
 try:
     root_folder = config['projects'][f'{language}_projects_path']
 except KeyError:
-    print(bg.RED + 'ERR' + bg.RESET + " " + F'{language.title()} Projects path is not specified.')
-    print(bg.BLUE + 'INFO' + bg.RESET + " " + F'Please add the path to the config.json file or run the {fc.CYAN}pycmd setup projects{fc.RESET} command.')
+    print(bg.RED + 'ERR' + bg.RESET + " " +
+          F'{language.title()} Projects path is not specified.')
+    print(bg.BLUE + 'INFO' + bg.RESET + " " +
+          F'Please add the path to the config.json file or run the {fc.CYAN}pycmd setup projects{fc.RESET} command.')
     exit(1)
 
 project_path = os.path.join(root_folder, project_name)
@@ -220,7 +222,7 @@ def git_init(name, private: bool = False):
     try:
         user.create_repo(name, private=private)
         commands = [{'cd ' + project_path: 'Changing directory to ' + os.path.relpath(project_path)},
-                    {'git init': 'Initializing git repository'},
+                    {'git init': 'Initializing git'},
                     {f'git remote add origin https://github.com/{user.login}/{project_name}.git': 'Connecting to remote repository'},
                     {'git add -A': 'Adding files'},
                     {'git commit -m "Initial commit"': 'Committing files'},
@@ -273,8 +275,8 @@ if '-l' in flags or '-local' in flags:
     print(f'Git: {fc.RED}Not Initializing')
 else:
     private = True if '-p' in flags or '-private' in flags else False
-    print(f'Git: {fc.GREEN}Initializing {fc.LIGHTBLUE_EX}private {fc.GREEN}repository' 
-          if private 
+    print(f'Git: {fc.GREEN}Initializing {fc.LIGHTBLUE_EX}private {fc.GREEN}repository'
+          if private
           else f'Git: {fc.GREEN}Initializing {fc.LIGHTBLUE_EX}public {fc.GREEN}repository' + fc.RESET)
 if '-y' not in flags:
 
@@ -304,9 +306,10 @@ if '-y' not in flags:
             exit(0)
         if continued:
             break
-        sys.stdout.write('\r' + bg.BLUE + 'INFO' + bg.RESET + ' ' + f'Creating {language} project "{project_name}" in {fc.CYAN}{i}{fc.RESET} seconds')
+        sys.stdout.write('\r' + bg.BLUE + 'INFO' + bg.RESET + ' ' +
+                         f'Creating {language} project "{project_name}" in {fc.CYAN}{i}{fc.RESET} seconds')
         time.sleep(1)
-    time_over = True  
+    time_over = True
 
 print(fc.MAGENTA + '\rCreating Directories...' + ' ' * 50)
 
@@ -323,14 +326,14 @@ if language == 'web':
         file.close()
     open('index.js', 'w').close()
     open('style.css', 'w').close()
-    
+
 elif language == 'rust':
     output = run(f'cargo new {project_name}', shell=True, capture_output=True)
     if output.returncode != 0:
         print(bg.RED + '\rERR' + bg.RESET +
-            " " + 'While creating rust project' + " " * 20)
+              " " + 'While creating rust project' + " " * 20)
         print(bg.BLUE + fc.BLACK + 'INFO' + fc.RESET + bg.RESET + ' ' +
-            f'While executing: {fc.CYAN}"' + f'cargo new {project_name}' + f'"{fc.RESET}: \n')
+              f'While executing: {fc.CYAN}"' + f'cargo new {project_name}' + f'"{fc.RESET}: \n')
         print(output.stderr.decode('unicode_escape'))
         print(fc.RED + '\nAbort..')
 
@@ -339,13 +342,12 @@ elif language == 'node.js':
         file.write(boiler_plate)
         file.close()
 
-    
     output = run(f'npm init -y', shell=True, capture_output=True)
     if output.returncode != 0:
         print(bg.RED + '\rERR' + bg.RESET +
-            " " + 'While initializing npm' + " " * 20)
+              " " + 'While initializing npm' + " " * 20)
         print(bg.BLUE + fc.BLACK + 'INFO' + fc.RESET + bg.RESET + ' ' +
-            f'While executing: {fc.CYAN}"' + 'npm init -y' + f'"{fc.RESET}: \n')
+              f'While executing: {fc.CYAN}"' + 'npm init -y' + f'"{fc.RESET}: \n')
         print(output.stderr.decode('unicode_escape'))
         print('\nSkipping...')
 
@@ -370,19 +372,17 @@ if not '-local' in flags and not '-l' in flags:
 try:
     text_editor = config['text-editor']
 except KeyError:
-    print(bg.YELLOW + fc.BLACK + '\rWARNING' +fc.RESET +  bg.RESET + " " + 'No text editor specified in config.json')
-    print(f'Set the default text editor to open the project with the {fc.CYAN}pycmd setup editor{fc.RESET} command.')
+    print(bg.YELLOW + fc.BLACK + '\rWARNING' + fc.RESET +
+          bg.RESET + " " + 'No text editor specified in config.json')
+    print(
+        f'Set the default text editor to open the project with the {fc.CYAN}pycmd setup editor{fc.RESET} command.')
     exit()
 
 if text_editor == 'Visual Studio Code':
     os.system(f'code {project_path}')
-elif text_editor == 'Vim':
-    os.system(f'vim {project_path}')
 elif text_editor == 'Sublime Text':
     os.system(f'subl {project_path}')
 elif text_editor == 'Atom':
     os.system(f'atom {project_path}')
-elif text_editor == 'Emacs':
-    os.system(f'emacs {project_path}')
-elif text_editor == 'Nano':
-    os.system(f'nano {project_path}')
+else:
+    os.system(f'cd {project_path} && {text_editor}')

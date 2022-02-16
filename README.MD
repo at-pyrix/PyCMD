@@ -4,9 +4,8 @@
 - Add the `rm` command
 - Add the `ren` command
 - Add the `ls` command
-- Update `readme`
 - Make it linux compatible
-- Publish to PyPI
+- Publish to PyPI somehow
 
 ## Contents
 - [About](#description)
@@ -23,7 +22,7 @@
 
 ## Description
 
-**PyCmd is a command-line interface tool to help you manage your projects. It saves you a lot of clicks. If that sounds interesting, [Setup PyCMD](#installation)**
+PyCmd is a **command-line tool** to help you **manage** your **projects**. It saves you a lot of clicks. It's **simple** and **easy** to use.
 
 
 ### Why PyCMD?
@@ -36,9 +35,11 @@ PYCMD helps you create, manage and do cool stuff your projects super-fast ⚡
 
 
 ## Installation:
+It is recommended to install PyCMD in the `~`(user) folder.
 - ⬇️ Clone the repo:
 
   ```console
+  cd ~
   git clone https://www.github.com/Yasho/PyCMD.git
   ```
 - ⚙️ Add the `bin` folder to your `PATH` environment variable.: 
