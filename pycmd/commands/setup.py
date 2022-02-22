@@ -2,7 +2,7 @@ import os
 import json
 import dotenv
 import requests
-from inquirer import password as getpass
+from getpass import getpass
 from colorama import Fore as fc, init
 from pycmd.utils.pycmd import get_path, autocorrect, argparse
 from msvcrt import getch
@@ -184,7 +184,8 @@ def git_setup():
 
         while not length_valid:
             try:
-                github_token = getpass(fc.CYAN + "» " + fc.GREEN, 40)
+                print(fc.LIGHTBLACK_EX + '(You can still type but it will be hidden [echo will be turned off])')
+                github_token = getpass(fc.CYAN + "» " + fc.GREEN,)
             except IndexError:
                 print(fc.RED + '\nToken length must be not more than 40 characters.')
             else:
@@ -222,7 +223,8 @@ def editor_setup():
     for i in editors_available:
         print(f'{fc.LIGHTBLACK_EX}•{fc.LIGHTBLUE_EX} {i}')
 
-    editor = input(f'\n{fc.CYAN}» {fc.GREEN}')
+    print('\n')
+    editor = input(f'{fc.CYAN}» {fc.GREEN}')
     editor = autocorrect(editor, editors_available, 0.4, False)
     editor = 'Visual Studio Code' if 'code' in editor else editor
 
