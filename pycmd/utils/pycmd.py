@@ -33,11 +33,13 @@ def argparse(args: list=sys.argv):
             argument = arg
     return argument, flags
 
+# Copied from stack overflow, but i forgor where from 💀
 def get_path(prompt:str='Open'):
     """
     Get folder path by launching a popup dialog
     
     `prompt` is the title of the dialog
+    
     """
     app = wx.App(None)
     style = wx.FD_OPEN | wx.FD_FILE_MUST_EXIST
@@ -46,6 +48,7 @@ def get_path(prompt:str='Open'):
         path = dialog.GetPath()
     else:
         path = None
+        
     dialog.Destroy()
     
     return path

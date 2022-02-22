@@ -4,7 +4,7 @@ import dotenv
 import requests
 from inquirer import password as getpass
 from colorama import Fore as fc, init
-from utils.pycmd import get_path, autocorrect, argparse
+from pycmd.utils.pycmd import get_path, autocorrect, argparse
 from msvcrt import getch
 from textwrap import dedent
 

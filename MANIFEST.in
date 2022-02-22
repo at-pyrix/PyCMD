@@ -1,0 +1,2 @@
+include pycmd/json/commands.json
+include pycmd/json/config.json

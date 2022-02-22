@@ -4,13 +4,13 @@
 - Add the `rm` command
 - Add the `ren` command
 - Add the `ls` command
-- Make it linux compatible
-- Publish to PyPI somehow
 
 ## Contents
 - [About](#description)
   - [Why PyCMD?](#why-pycmd)
 - [Setup](#installation)
+  - [Manual Setup](#manual)
+  - [Using pip](#pip)
   - [Requirements](#requirements)
 - [PyCMD Commands](#commands)
 - [Usage](#usage)
@@ -31,25 +31,28 @@ PYCMD helps you create, manage and do cool stuff with your projects super-fast �
 
 **Here's how fast things are with PYCMD**
 
-![](https://github.com/Yasho022/PyCmd/blob/master/images/Comparision-low.gif?raw=true)
+![](./images/Comparision-low.gif)
 
 
 ## Installation:
-It is recommended to install PyCMD in the `~`(user) folder.
+
+### Pip
+> Make sure you have the python `lib/site-packages` added to your `PATH`
+```console
+pip install pycmd-cli
+pycmd setup
+```
+
+### Manual
+
 - ⬇️ Clone the repo:
 
   ```console
-  cd ~
   git clone https://www.github.com/Yasho/PyCMD.git
   ```
-- ⚙️ Add the `bin` folder to your `PATH` environment variable.: 
-
-  *I had to make a batch file to get the abspath of the folder.*
-
-  ```console
+- ```console
   cd pycmd
-  ./add_to_path
-  rm ./add_to_path.cmd
+  pip install .
   ```
 <!--
 <ul><li>
@@ -205,14 +208,6 @@ SOFTWARE.
 
 - How do you contribute to PyCMD?
 > You can contribute to PyCMD by [opening an issue](https://www.github.com/Yasho022/PyCMD/issues) or [forking](https://www.github.com/Yasho022/PyCMD/fork). 
-
-- But seriously, I don't like the name?
-> You can change the name of `PyCMD` to something else by renaming the `pycmd.cmd` in the `bin` folder.
-> Example:
-> ```
-> ren bin/pycmd.cmd bred.cmd
-> ```
-> However, this will only change the name to use PYCMD, all the commands will still use the `PyCMD` name.
 
 ---
 
