@@ -10,8 +10,8 @@ from colorama import Fore as fc, init
 
 init(autoreset=True)
 
-version = "1.0.0"
 os.chdir(os.path.abspath(__file__ + "/../"))
+version = open('pycmd/version.txt').read().strip()
 
 def argparse(args: list):
     function = args[1] if not args[1].startswith('-') else ""

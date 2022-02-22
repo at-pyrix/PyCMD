@@ -4,7 +4,7 @@ import setuptools
 
 name = 'pycmd-cli'
 description = 'PyCmd is a command-line tool to help you manage** your projects'
-version = '1.2.2'
+version = open('pycmd/version.txt').read().strip()
 readme = open('README.md', 'r', encoding='utf8').read()
 cli_name = 'pycmd'
 
@@ -41,3 +41,8 @@ include_package_data=True
 # To upload:
 # twine upload -r pypi dist/*
 # NotYasho
+
+
+# Updating a version
+# Change the version in setup.py and pycmd/__main__.py
+# Run pypi-update

@@ -1,3 +1,4 @@
 include pycmd/json/commands.json
 include pycmd/json/config.json
 include pycmd/.env
+include pycmd/version.txt
