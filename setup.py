@@ -5,8 +5,6 @@ import setuptools
 name = 'pycmd-cli'
 description = 'PyCmd is a command-line tool to help you manage** your projects'
 version = '1.2.0'
-author = 'NotYasho'
-author_email = 'wiredhack022@email.com',
 readme = open('README.md', 'r', encoding='utf8').read()
 cli_name = 'pycmd'
 
@@ -23,8 +21,6 @@ setuptools.setup (
  description = description,
  long_description=readme,
  long_description_content_type="text/markdown",
- author=author,
- author_email=author_email,
  packages=[cli_name, f'{cli_name}.commands', f'{cli_name}.utils'],
  keywords=[name, cli_name],
  python_requires='>=3.6', 
@@ -43,4 +39,4 @@ include_package_data=True
 # python setup.py sdist bdist_wheel
 
 # To upload:
-# twine upload --repository-url https://test.pypi.org/legacy/ dist/*
+# twine upload -r pypi dist/*

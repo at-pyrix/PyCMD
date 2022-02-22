@@ -54,27 +54,6 @@ pycmd setup
   cd pycmd
   pip install .
   ```
-<!--
-<ul><li>
-<details>
-  <summary>
-    Add the <code>bin</code> folder to your <code>PATH</code> environment variable.
-  </summary>
-
-  - Search for `environment variables for your account` in the start menu.
-  - Click on `Edit environment variables for your account`.
-  - In the `User Variables`, Select `Path` and click `Edit`.
-
-    ![](https://i2.paste.pics/FNOQY.png)
-  - Click `New` and add the `pycmd/bin/` folder to the `Path`.
-
-    ![](https://i2.paste.pics/FNOSK.png)
-  - Click `OK`.
-  - Restart your terminal.
-</details>
-</li>
-</ul>
--->
 
 - ⚒️ Install the requirements:
 
