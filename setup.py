@@ -41,4 +41,3 @@ include_package_data=True
 # To upload:
 # twine upload -r pypi dist/*
 # NotYasho
-# Yash0^#PyPi
