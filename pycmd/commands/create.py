@@ -9,6 +9,7 @@ import itertools
 import textwrap
 import os
 from dotenv import load_dotenv
+from pycmd.utils.pycmd import argparse
 import threading
 import re
 import time
@@ -17,25 +18,12 @@ init(autoreset=True)
 load_dotenv()
 
 
-def argparse(args: list):
-    argument = ''
-    flags = []
-    for arg in args:
-        if arg.startswith('-'):
-            flags.append(arg)
-        else:
-            argument = arg
-    return argument, flags
-
-
 argument, flags = argparse(sys.argv)
 
-# Making the characters variable-friendly with regex
-# Source: https://stackoverflow.com/a/3305731
-
-# This will send it to "Unknown Project"
 if "." not in argument:
     argument = 'untitled.unknown'
+    # This will classify it as "Unknown Project"
+
 project_name = re.sub('\W|^(?=\d)', '_', argument.split('.')[0])
 
 with open("json/config.json", "r") as file:

@@ -1,6 +1,7 @@
 import json
 import sys
 import os
+from textwrap import dedent
 import re
 from colorama import Fore as fc, Back as bg, Style as st, init
 init(autoreset=True)
@@ -49,12 +50,24 @@ elif '.cs' in argument and not '.css' in argument:
     language = 'c#'
 
 else:
-    print('Unknown Project')
+    print(dedent(f"""
+    {bg.RED}ERR{bg.RESET} {fc.RESET}Unknown project type.
+    See the list of projects below:
+    
+    {fc.LIGHTBLUE_EX}.py{fc.LIGHTBLACK_EX}   -  {fc.GREEN}Python Project
+    {fc.LIGHTBLUE_EX}.js{fc.LIGHTBLACK_EX}   -  {fc.GREEN}JavaScript Project
+    {fc.LIGHTBLUE_EX}.java{fc.LIGHTBLACK_EX} -  {fc.GREEN}Java Project
+    {fc.LIGHTBLUE_EX}.html{fc.LIGHTBLACK_EX} -  {fc.GREEN}Web Project
+    {fc.LIGHTBLUE_EX}.rs{fc.LIGHTBLACK_EX}   -  {fc.GREEN}Rust Project
+    {fc.LIGHTBLUE_EX}.cpp{fc.LIGHTBLACK_EX}  -  {fc.GREEN}C++ Project
+    {fc.LIGHTBLUE_EX}.go{fc.LIGHTBLACK_EX}   -  {fc.GREEN}Go Project
+    {fc.LIGHTBLUE_EX}.ts{fc.LIGHTBLACK_EX}   -  {fc.GREEN}TypeScript Project
+    {fc.LIGHTBLUE_EX}.cs{fc.LIGHTBLACK_EX}   -  {fc.GREEN}C# Project
+    """))
     exit(1)
     
 with open('json/config.json') as config_file:
     config = json.load(config_file)
-    config_file.close()
     
 try:
     root_folder = config['projects'][f'{language}_projects_path']

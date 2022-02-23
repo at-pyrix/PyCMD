@@ -1,3 +1,4 @@
+from ast import Pass
 from distutils.command.config import config
 from colorama import Fore as fc, Style as st, init
 import os
@@ -16,9 +17,12 @@ d8888b.  db    db   .o88b.  .88b   d8.   d8888b.
 88          YP     `Y88P'   YP  YP  YP   Y8888D'
 """)
 
-with open('json/config.json', 'r') as f:
-    config = json.load(f)
-    f.close()
+try:
+    with open('json/config.json', 'r') as f:
+        config = json.load(f)
+        f.close()
+except FileNotFoundError:
+    config = {'is_setup': False}
 
 __setup_done__ = config['is_setup']
 

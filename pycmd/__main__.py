@@ -7,14 +7,13 @@ from pycmd.utils.pycmd import autocorrect
 import msvcrt
 import json
 from colorama import Fore as fc, init
-
 init(autoreset=True)
 
 os.chdir(os.path.abspath(__file__ + "/../"))
-version = open('version.txt').read().strip()
+
 
 def argparse(args: list):
-    function = args[1] if not args[1].startswith('-') else ""
+    function = args[1] if not args[1].startswith("-") else ""
     parameter = ""
     flags = []
     for i in args[1:]:
@@ -28,13 +27,17 @@ def argparse(args: list):
 
     return function, parameter, flags
 
+
 def help(command: str):
-    file = open(f"json/commands.json", "r")
-    data = json.load(file)
-    for i in data:
+    commands = open(f"json/commands.json", "r")
+    commands = json.load(commands)
+    for i in commands:
+
         if i["name"] == command:
+
             if "description" in i:
                 print(" " * (2) + f'\n{fc.YELLOW}{i["description"]}\n')
+
             if "usage" in i:
                 print(
                     " " * (2)
@@ -67,58 +70,30 @@ def help(command: str):
 
 def execute(command: str, parameter: str, flags: list):
 
-    # Special Cases
-
-    """
-    how to increase file size with unneccesary comments 101
-    ⣀⣠⣤⣤⣤⣤⢤⣤⣄⣀⣀⣀⣀⡀⡀⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄
-    ⠄⠉⠹⣾⣿⣛⣿⣿⣞⣿⣛⣺⣻⢾⣾⣿⣿⣿⣶⣶⣶⣄⡀⠄⠄⠄
-    ⠄⠄⠠⣿⣷⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣯⣿⣿⣿⣿⣿⣿⣆⠄⠄
-    ⠄⠄⠘⠛⠛⠛⠛⠋⠿⣷⣿⣿⡿⣿⢿⠟⠟⠟⠻⠻⣿⣿⣿⣿⡀⠄
-    ⠄⢀⠄⠄⠄⠄⠄⠄⠄⠄⢛⣿⣁⠄⠄⠒⠂⠄⠄⣀⣰⣿⣿⣿⣿⡀
-    ⠄⠉⠛⠺⢶⣷⡶⠃⠄⠄⠨⣿⣿⡇⠄⡺⣾⣾⣾⣿⣿⣿⣿⣽⣿⣿
-    ⠄⠄⠄⠄⠄⠛⠁⠄⠄⠄⢀⣿⣿⣧⡀⠄⠹⣿⣿⣿⣿⣿⡿⣿⣻⣿
-    ⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠉⠛⠟⠇⢀⢰⣿⣿⣿⣏⠉⢿⣽⢿⡏
-    ⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠠⠤⣤⣴⣾⣿⣿⣾⣿⣿⣦⠄⢹⡿⠄
-    ⠄⠄⠄⠄⠄⠄⠄⠄⠒⣳⣶⣤⣤⣄⣀⣀⡈⣀⢁⢁⢁⣈⣄⢐⠃⠄
-    ⠄⠄⠄⠄⠄⠄⠄⠄⠄⣰⣿⣛⣻⡿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡯⠄⠄
-    ⠄⠄⠄⠄⠄⠄⠄⠄⠄⣬⣽⣿⣻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠁⠄⠄
-    ⠄⠄⠄⠄⠄⠄⠄⠄⠄⢘⣿⣿⣻⣛⣿⡿⣟⣻⣿⣿⣿⣿⡟⠄⠄⠄
-    ⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠛⢛⢿⣿⣿⣿⣿⣿⣿⣷⡿⠁⠄⠄⠄
-    ⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠉⠉⠉⠉⠈⠄⠄⠄⠄⠄⠄
-    """
-    if command == "utils":
-        print(
-            f'\nCommand {fc.LIGHTBLACK_EX}"{command}{fc.LIGHTBLACK_EX}"{fc.RESET} not found.'
-        )
-        print(f"Run {fc.CYAN}pycmd help{fc.RESET} for list of commands.")
-
-    if "-v" in flags or "-version" in flags or command == "version":
-        print(f"PYCMD v{version}")
-        return 0
-
     if not command:
         os.system("python commands/help.py help " + " ".join(flags))
-        return 0
+        return
 
-    if "-help" in flags or "-h" in flags:
+    elif "-help" in flags or "-h" in flags:
         help(command)
-        return 0
+        return
 
     elif command == "help":
         if parameter != ".":
             help(parameter)
         else:
             os.system("python commands/help.py")
-        return 0
+        return
 
     if os.path.exists(f"commands/{command}.py"):
         os.system(f'python commands/{command}.py {parameter} {" ".join(flags)}')
-        return 0
+        return
+
     else:
-        corrected = autocorrect(command.lower(), os.listdir("commands"))
+        corrected = autocorrect(command, os.listdir("commands"))
         if corrected:
-            corrected = corrected.replace(".py", "")
+            # Removes the .py extension
+            corrected = corrected[:-3]
             print(
                 f'\nCommand {fc.LIGHTBLACK_EX}"{command}{fc.LIGHTBLACK_EX}"{fc.RESET} not found.\nDid you mean {fc.LIGHTBLACK_EX}"{fc.CYAN}{corrected}{fc.RESET}{fc.LIGHTBLACK_EX}"{fc.RESET}?'
             )
@@ -137,10 +112,12 @@ def execute(command: str, parameter: str, flags: list):
                 f'\nCommand {fc.LIGHTBLACK_EX}"{command}{fc.LIGHTBLACK_EX}"{fc.RESET} not found.'
             )
             print(f"Run {fc.CYAN}pycmd help{fc.RESET} for list of commands.")
-        return 1
+
+        return
 
 
 def main():
+
     if len(sys.argv) > 1:
         function, parameter, flags = argparse(sys.argv)
         try:

@@ -1,7 +1,6 @@
 <h1 align=center> PyCMD - A CLI tool</h1>
 
 ## TODO:
-- Add the `rm` command
 - Add the `ren` command
 - Add the `ls` command
 

@@ -10,7 +10,7 @@ with open('json/config.json', 'r') as file:
 
 editor = config['text-editor']
 
-pycmd_path = os.path.realpath(os.getcwd())
+pycmd_path = os.path.realpath(__file__ + '/../../')
 
 if '-e' in sys.argv:
     editor = 'Explorer'

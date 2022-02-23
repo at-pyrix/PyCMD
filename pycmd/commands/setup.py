@@ -255,7 +255,7 @@ def git_setup():
             print("\n" + fc.RED + "Invalid token. Git Setup Incomplete")
 
     else:
-        print(fc.RED + "\rGit Setup Incomplete")
+        print(fc.RED + "\rGit Setup Incomplete          ")
 
 
 def editor_setup():
