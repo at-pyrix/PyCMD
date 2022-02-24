@@ -1,8 +1,4 @@
-<h1 align=center> PyCMD - A CLI tool</h1>
-
-## TODO:
-- Add the `ren` command
-- Add the `ls` command
+<h1 align=center> PyCMD - Manage your Projects</h1>
 
 ## Contents
 - [About](#description)
@@ -19,9 +15,9 @@
 - [Frequently Asked Questions](#faqs)
 
 
-## Description
+## What is PyCMD?
 
-PyCmd is a **command-line tool** to help you **manage** your **projects**. It saves you a lot of clicks. It's **simple** and **easy** to use.
+PyCmd is a **command-line tool** to help you **manage** your **projects**. It saves you a lot of clicks. It's **simple** and **easy** to use. Interesting? [Give it a try](#installation)
 
 
 ### Why PyCMD?
@@ -32,15 +28,17 @@ PYCMD helps you create, manage and do cool stuff with your projects super-fast �
 
 ![](./images/Comparision-low.gif)
 
+*forgive me for the **hamburger***
+
 
 ## Installation:
 
 ### Pip
-> Make sure you have the python `lib/site-packages` added to your `PATH`
 ```console
 pip install pycmd-cli
 pycmd setup
 ```
+> Make sure you have the python `lib/site-packages` added to your `PATH`
 
 ### Manual
 
@@ -68,7 +66,8 @@ pycmd setup
   pycmd setup
   ```
 ### Requirements
-- [Python 3+ (Tested on 3.9.9)](https://www.python.org/downloads/)
+> ⚠️ Doesn't work on Python 3.10 yet
+- [Python 3.6+ (Tested on 3.9.9)](https://www.python.org/downloads/) 
 - [Pip](https://pypi.org/project/pip/)
 - [Git](https://git-scm.com/downloads)
 - [Windows](https://www.microsoft.com/en-in/windows)
@@ -81,20 +80,23 @@ pycmd setup
 |---------|-------------|
 | `pycmd` | Run the PyCMD command line interface. |
 | `pycmd help` | Display help information. |
-| `pycmd version` | Display the version number. |
 | `pycmd setup` | Setup PyCMD. |
-| `pycmd ls` | List all projects. |
+| `pycmd ls` | List all projects. (Including Github repositories) |
 | `pycmd open` | Open a project. |
 | `pycmd rm` | Remove a project. |
 | `pycmd create` | Create a new project + initialize a Git repository. |
+| `pycmd src` | View and edit the source code of PYCMD |
+
+*It's okay if you misspell the commands, PYCMD will correct them ;​-)*
 
 ## Usage
 
-Use `pycmd` to run the command line interface.
+Use `pycmd` to run the command line interface.<br>
+*Really?*
 
-Usage:
+**Usage:**
 ```
-$ pycmd <command> <parameter> --<flags> 
+$ pycmd <command> <parameter> -<flags> 
 ```
 
 Example:
@@ -115,9 +117,8 @@ Here are some ways you can help:
 - [x] Update CLI help command
 - [ ] Unix Support
 - [ ] New Commands
-- [ ] `PYCMD Update` command which will merge the changes of a new release into your current branch. 
 
-pls tell me about bugs in the code. I don't even use light mode.
+*pls inform me about bugs in the code. i'll fix them as soon as possible*
 
 
 ### Contributers:
@@ -137,7 +138,7 @@ PYCMD is licensed under the [MIT license](https://www.opensource.org/licenses/mi
 ```license
 MIT License
 
-Copyright (c) 2022 Yasho022
+Copyright (c) 2022 Yasho
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (PYCMD), to deal
@@ -162,10 +163,7 @@ SOFTWARE.
 ## FAQs:
 
 - Why did you name it **Py**CMD? 
->  ¯\\_\(ツ\)\_\/¯, but I think it's an **ok** name. Also `Py` represents the Python language in which PYCMD was written. Not the best name, but okay. 
-
-- How do you use PyCMD?
-> You can use the `pycmd` command. It will help you to get started.
+>  ¯\\_\(ツ\)\_\/¯, but I think it's an **ok** name. Also `Py` represents the Python language in which PYCMD was written. Not the best name, but i'm bad at keeping names. 
 
 - Why should I use PyCMD?
 > PyCMD saves you a lot of time, you can use it to manage your projects if they are messy or if you want to make a lot of changes in short time. Not only that but also it will help you to make your projects more readable and maintainable.
@@ -175,17 +173,18 @@ SOFTWARE.
 > | Pros | Cons |
 > | ---- | ---- |
 > | Easy to use | Might be an overkill |
-> | Saves Time | Compaitable with Windows only |
+> | Saves Time | Only compaitable with Windows currently |
 > | Generates Boiler Plate | |
+> | Easy to install/uninstall | |
 > | Manages GIT | |
-> | Light - Doesn't take too much space |
+> | Light (Doesn't take too much space) |
 
 
 - Does PyCMD collect any user data?
-> No, PyCMD doesn't collect any user data. It stores the configuration in a file `config.json`.
+> No, PyCMD doesn't collect any user data. It stores the configuration in your local storage in the file `json/config.json`.
 
 - How do you contribute to PyCMD?
-> You can contribute to PyCMD by [opening an issue](https://www.github.com/Yasho022/PyCMD/issues) or [forking](https://www.github.com/Yasho022/PyCMD/fork). 
+> You can contribute to PyCMD by [opening an issue](https://www.github.com/Yasho022/PyCMD/issues) or by a [pull request](https://www.github.com/Yasho022/PyCMD/fork). 
 
 ---
 
@@ -193,14 +192,17 @@ SOFTWARE.
 
 If you encounter any problems feel free to [Contact me](#contact-me-)
 
-*I heard that emojis attract attention, don't mind me, I hate them too. (i have an official rivalry towards yellow circles)*
+*I heard that emojis attract attention, that's why I used them. Really sorry if you hate them, I hate them too. (i have an official rivalry towards yellow circles)*
 
 *inspired by npm and heroku cli*
 
 ### Contact Me 💌
           
-<a href = "mailto:wiredhack022@gmail.com" target="_blank">
-<img src="https://img.shields.io/badge/wiredhack022@gmail.com-e9ff40?style=for-the-badge&amp;logo=gmail&amp;logoColor=black" alt="GMail">
-</a>
 <a href = "https://www.reddit.com/user/Yasho022" target="_blank">
- <img src="https://img.shields.io/badge/NotYasho-ff4803?style=for-the-badge&amp;logo=reddit&amp;logoColor=white" alt = "Reddit">
+ <img src="https://img.shields.io/badge/NotYasho-ff4803?style=for-the-badge&amp;logo=reddit&amp;logoColor=white" alt = "Reddit" title="Reddit">
+<a href = "https://discord.com/users/875991927210786848">
+  <img src="https://img.shields.io/badge/NotYasho-6f42f5?style=for-the-badge&amp;logo=discord&amp;logoColor=white" alt = "Discord" title="Discord">
+
+<a href = "mailto:wiredhack022@gmail.com" target="_blank">
+<img src="https://img.shields.io/badge/wiredhack022@gmail.com-f5d742?style=for-the-badge&amp;logo=gmail&amp;logoColor=black" alt="Mail" title="Mail">
+</a>

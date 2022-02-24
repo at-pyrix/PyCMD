@@ -1,163 +1,158 @@
-from github import Github
-import requests
-import sys
-import dotenv
 import os
-from colorama import Fore as fc
-import time
-import sys
-dotenv.load_dotenv(".env")
+from github import Github
+from time import sleep
+from textwrap import dedent
+from json import load as read
+from pycmd.utils.pycmd import argparse
+from dotenv import load_dotenv, get_key
+from colorama import Fore as fc, Back as bg, init
 
-# TODO: Check if the project is a git repo by checking the .git folder
+init(autoreset=True)
+load_dotenv()
 
-# checks if it is a file or a folder and lists the folder
+print()
 
-def listdir(path):
+def list_folders(path):
     listdir_path = os.listdir(path)
-    dir__ = []
+    folders = []
     for file in listdir_path:
         filename, file_extension = os.path.splitext(file)
         file_extension = str(file_extension)
         if file_extension:
             continue
         else:
-            dir__.append(filename)
-    return dir__
+            folders.append(filename)
+    return folders
 
 
-if "repo" in sys.argv[1] or "git" in sys.argv[1]:
-    g = Github(os.getenv('GITHUB_TOKEN'))
-    user = g.get_user()
-    login = user.login
-
-    link = ('https://api.github.com/users/Yasho022/repos')
+def list_repos():
 
     try:
-        api_link = requests.get(link)
-        api_data = api_link.json()
+        token = get_key(".env", "GITHUB_TOKEN")
+        gh = Github(token)
 
-    except:
-        print(f"{fc.LIGHTRED_EX}An Error Occurred{fc.RESET}")
+        user = gh.get_user()
+        repos = user.get_repos()
 
-    repos_Data = (api_data)
-
-    repos = []
-
-    repos_pub = []
-    repos_priv = []
-
-    for item in repos_Data:
-        try:
-            repo_pub = item['name']
-        except TypeError:
-            print(f"{fc.LIGHTRED_EX}Max Limit Reached For API Calls{fc.RESET}")
-            exit()
-        else:
-            repos_pub.append(repo_pub)
-
-    for repo in g.get_user().get_repos():
-        repo_priv = repo.name
-        repos_priv.append(repo_priv)
-
-    repos_pub = (sorted(repos_pub))
-    repos_priv = (sorted(repos_priv))
-
-    repositories = repos_pub
-    repos_pub.extend(repos_priv)
-
-    repos_priv = (set([x for x in repositories if repositories.count(x) == 1]))
-    repos_pub = (set([x for x in repositories if repositories.count(x) > 1]))
-
-    print(
-        f"\r{fc.LIGHTGREEN_EX}Your Github Repositories {fc.LIGHTYELLOW_EX}[Total: {len(repos_Data)}]:{fc.RESET}\n")
-    time.sleep(0.5)
-
-    for repo in repos_pub:
-        time.sleep(0.1)
-        print(fc.LIGHTBLACK_EX+"• "+fc.RESET+repo)
-    for repo in repos_priv:
-        time.sleep(0.1)
-        print(f"{fc.LIGHTBLACK_EX}• {fc.LIGHTBLACK_EX}{repo}{fc.RESET} ")
-
-    print(fc.RESET)
-
-elif "py" in sys.argv[1]:
-    list_py = listdir('C:\\Programming\\Python_Projects')
-    if list_py:
-        print(
-            f"{fc.LIGHTGREEN_EX}You have the following Python Projects{fc.LIGHTYELLOW_EX} [Total: {len(list_py)}]{fc.LIGHTWHITE_EX}\n")
-        for item in list_py:
-            root = listdir('C:\\Programming\\Python_Projects\\' + item)
-            time.sleep(0.1)
-
-            if ".git" in root:
-                print(f"{fc.LIGHTBLACK_EX}• {fc.LIGHTGREEN_EX}{item}{fc.RESET}")
+        for i in repos:
+            if i.private:
+                print(fc.LIGHTBLACK_EX + "• " + i.name)
             else:
-                print(fc.LIGHTBLACK_EX+"• " + fc.RESET + item + fc.RESET)
-    else:
-        print(
-            f"{fc.LIGHTRED_EX}You have no Python Projects currently{fc.LIGHTWHITE_EX}")
-    print(fc.RESET)
+                print(fc.LIGHTBLACK_EX + "• " + fc.RESET + i.name)
+            sleep(0.1)
+    except Exception as e:
+        print(bg.RED + "ERR" + bg.RESET + " " + str(e))
+        exit(1)
 
 
-elif sys.argv[1] == "js" or "javascript" in sys.argv[1]:
-    list_js = listdir('C:\\Programming\\Web_Projects\\Javascript\\')
-    if list_js:
-        print(
-            f"{fc.LIGHTGREEN_EX}You have the following JavaScript Projects{fc.LIGHTYELLOW_EX} [Total: {len(list_js)}]{fc.LIGHTWHITE_EX}\n")
-        for item in list_js:
-            root = listdir(
-                'C:\\Programming\\Web_Projects\\Javascript\\' + item)
-            time.sleep(0.1)
+def list_dir(path):
 
-            if ".git" in root:
-                print(f"{fc.LIGHTBLACK_EX}• {fc.LIGHTGREEN_EX}{item}{fc.RESET}")
+    try:
+        projects = list_folders(path)
+
+        print(f'You have {fc.CYAN}{len(projects)}{fc.GREEN} {language} projects\n')
+
+        for i in projects:
+            is_empty = True if os.listdir(path + "/" + i) == [] else False
+            is_git_init = True if ".git" in os.listdir(path + "/" + i) else False
+
+            if is_empty:
+                print(fc.LIGHTBLACK_EX + "• " + i)
+            elif is_git_init:
+                print(fc.LIGHTBLACK_EX + "• " + fc.GREEN + i)
             else:
-                print(fc.LIGHTBLACK_EX+"• " + fc.RESET + item + fc.RESET)
-    else:
-        print(
-            f"{fc.LIGHTRED_EX}You have no Javascript Projects currently{fc.LIGHTWHITE_EX}")
-    print(fc.RESET)
+                print(fc.LIGHTBLACK_EX + "• " + fc.RESET + i)
+            sleep(0.1)
+    except Exception as e:
+        print(bg.RED + "ERR" + bg.RESET + " " + str(e))
+        exit(1)
 
-elif "java" in sys.argv[1]:
-    list_java = listdir('C:\\Programming\\Java_Projects')
-    if list_java:
-        print(
-            f"{fc.LIGHTGREEN_EX}You have the following Java Projects{fc.LIGHTYELLOW_EX} [Total: {len(list_java)}]{fc.LIGHTWHITE_EX}\n")
-        time.sleep(0.5)
-        for items in list_java:
-            time.sleep(0.1)
-            print(fc.LIGHTBLACK_EX+"• "+fc.RESET + items)
-    else:
-        print(
-            f"{fc.LIGHTGREEN_EX}You have no Java Projects currently{fc.LIGHTWHITE_EX}")
-    print(fc.RESET)
 
-elif "web" in sys.argv[1] or "html" in sys.argv[1]:
-    list_web = listdir('C:\\Programming\\Web_Projects\\Websites\\')
-    if list_web:
-        print(
-            f"{fc.LIGHTGREEN_EX}You have the following Web Projects {fc.LIGHTYELLOW_EX}[Total: {len(list_web)}]{fc.LIGHTWHITE_EX}\n")
-        time.sleep(0.5)
-        for item in list_web:
-            root = listdir('C:\\Programming\\Web_Projects\\Websites\\' + item)
-            time.sleep(0.1)
+project, flags = argparse()
+language = ""
 
-            if ".git" in root:
-                print(f"{fc.LIGHTBLACK_EX}• {fc.LIGHTGREEN_EX}{item}{fc.RESET}")
-            else:
-                print(fc.LIGHTBLACK_EX+"• " + fc.RESET + item + fc.RESET)
-    else:
-        print(f"{fc.LIGHTRED_EX}You have no Web Projects currently{fc.LIGHTWHITE_EX}")
-    print(fc.RESET)
+if project == "py" or project == "python":
+    language = "python"
+
+elif project == "js" or project == "nodejs":
+    language = "javascript"
+
+elif project == "java":
+    language = "java"
+
+elif project == "html" or project == "css" or project == "web":
+    language = "web"
+
+elif project == "rs" or project == "rust":
+    language = "rust"
+
+elif project == "cpp" or project == "c++":
+    language = "c++"
+
+elif project == "go":
+    language = "go"
+
+elif project == "ts" or project == "typescript":
+    language = "typescript"
+
+elif project == "cs" or project == "c#":
+    language = "c#"
+
+elif project == "git" or project == "repos":
+    language = "git"
 
 else:
     print(
-        f"""{fc.LIGHTRED_EX}
-See the List Arguments: [repo/py/js/java/web]\n{fc.RESET}
-{fc.LIGHTBLACK_EX}• {fc.LIGHTYELLOW_EX}repo  {fc.LIGHTBLACK_EX}:  {fc.RESET}List {fc.LIGHTGREEN_EX}GitHub Repositories{fc.RESET}
-{fc.LIGHTBLACK_EX}• {fc.LIGHTYELLOW_EX}py    {fc.LIGHTBLACK_EX}:  {fc.RESET}List {fc.LIGHTGREEN_EX}Python Projects {fc.RESET}
-{fc.LIGHTBLACK_EX}• {fc.LIGHTYELLOW_EX}java  {fc.LIGHTBLACK_EX}:  {fc.RESET}List {fc.LIGHTGREEN_EX}Java Projects {fc.RESET}
-{fc.LIGHTBLACK_EX}• {fc.LIGHTYELLOW_EX}js    {fc.LIGHTBLACK_EX}:  {fc.RESET}List {fc.LIGHTGREEN_EX}JavaScript Projects {fc.RESET}
-{fc.LIGHTBLACK_EX}• {fc.LIGHTYELLOW_EX}web   {fc.LIGHTBLACK_EX}:  {fc.RESET}List {fc.LIGHTGREEN_EX}Web Projects (html/css){fc.RESET}
-            """)
+        dedent(
+            f"""
+    {bg.RED}ERR{bg.RESET} {fc.RESET}Unknown project type.
+    
+    Usage: {fc.CYAN}pycmd ls [language]{fc.RESET}
+    
+    See the list of projects below:
+        
+    {fc.LIGHTBLUE_EX}git{fc.LIGHTBLACK_EX}  -  {fc.GREEN}Github Repositories
+    {fc.LIGHTBLUE_EX}py{fc.LIGHTBLACK_EX}   -  {fc.GREEN}Python Project
+    {fc.LIGHTBLUE_EX}js{fc.LIGHTBLACK_EX}   -  {fc.GREEN}JavaScript Project
+    {fc.LIGHTBLUE_EX}java{fc.LIGHTBLACK_EX} -  {fc.GREEN}Java Project
+    {fc.LIGHTBLUE_EX}html{fc.LIGHTBLACK_EX} -  {fc.GREEN}Web Project
+    {fc.LIGHTBLUE_EX}rs{fc.LIGHTBLACK_EX}   -  {fc.GREEN}Rust Project
+    {fc.LIGHTBLUE_EX}cpp{fc.LIGHTBLACK_EX}  -  {fc.GREEN}C++ Project
+    {fc.LIGHTBLUE_EX}go{fc.LIGHTBLACK_EX}   -  {fc.GREEN}Go Project
+    {fc.LIGHTBLUE_EX}ts{fc.LIGHTBLACK_EX}   -  {fc.GREEN}TypeScript Project
+    {fc.LIGHTBLUE_EX}cs{fc.LIGHTBLACK_EX}   -  {fc.GREEN}C# Project
+    """
+        )
+    )
+    exit(1)
+
+if language == "git":
+    list_repos()
+    print()
+    exit()
+
+with open("json/config.json", "r") as file:
+    config = read(file)
+
+try:
+    projects_path = config["projects"][f"{language}_projects_path"]
+except KeyError:
+    print(
+        bg.RED
+        + "ERR"
+        + bg.RESET
+        + " "
+        + f"{language.title()} Projects path is not specified."
+    )
+    print(
+        bg.BLUE
+        + "INFO"
+        + bg.RESET
+        + " "
+        + f"Please add the path to the config.json file or run the {fc.CYAN}pycmd setup projects{fc.RESET} command.\n"
+    )
+    exit(1)
+ 
+list_dir(projects_path)
+
+print()

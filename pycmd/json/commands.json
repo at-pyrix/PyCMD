@@ -3,12 +3,6 @@
 		"name": "create",
 		"description": "Create a new Project + Repo",
 		"usage": "create [project_name].[language-ext] [flags]",
-		"parameters": [
-			"py",
-			"js",
-			"web/html",
-			"java"
-		],
 		"example": "pycmd create google.html -p",
 		"flags": "-p -private, -l  -local, -y (no prompt)"
 	},
@@ -16,13 +10,6 @@
 		"name": "ls",
 		"description": "List all projects",
 		"usage": "ls [language]",
-		"parameters": [
-			"py",
-			"js",
-			"web/html",
-			"java",
-			"repos"
-		],
 		"example": "pycmd ls py"
 	},
 	{
@@ -34,25 +21,12 @@
 	{
 		"name": "rm",
 		"description": "Remove a project",
-		"parameters": [
-			"py",
-			"js",
-			"web/html",
-			"java",
-			"repos"
-		],
 		"usage": "rm [project_name]",
 		"example": "pycmd rm minecraft.java"
 	},
 	{
 		"name": "open",
 		"description": "Open a project in the default editor",
-		"parameters": [
-			"py",
-			"js",
-			"web/html",
-			"java"
-		],
 		"usage": "open [project_name].[extension] [flags]",
 		"example": "pycmd open hack_elon_musk.py",
 		"flags": "-e (To open with explorer)"

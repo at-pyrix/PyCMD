@@ -90,7 +90,7 @@ def execute(command: str, parameter: str, flags: list):
         return
 
     else:
-        corrected = autocorrect(command, os.listdir("commands"))
+        corrected = autocorrect(command, os.listdir("commands"), 0.3)
         if corrected:
             # Removes the .py extension
             corrected = corrected[:-3]

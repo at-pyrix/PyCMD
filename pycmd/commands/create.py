@@ -175,8 +175,6 @@ end = False
 text = ''
 
 # Inspired from: https://stackoverflow.com/a/22029635
-
-
 def animate():
     cursor.hide()
     for c in itertools.cycle(['⠟', '⠯', '⠷', '⠾', '⠽', '⠻']):

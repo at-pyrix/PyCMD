@@ -1,8 +1,7 @@
-import re
+import os
 from stat import S_IWRITE
 import shutil
 from json import load as read
-import os
 from textwrap import dedent
 from github import Github, GithubException
 from github.GithubException import UnknownObjectException
