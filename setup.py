@@ -1,8 +1,8 @@
 import setuptools
 
 name = "pycmd-cli"
-description = "PyCmd is a command-line tool to help you manage** your projects"
-version = '1.2.7'
+description = "PyCmd is a command-line tool to help you manage your projects."
+version = '1.0.0'
 readme = open("README.md", "r", encoding="utf8").read()
 cli_name = "pycmd"
 
@@ -18,7 +18,7 @@ setuptools.setup(
     long_description_content_type="text/markdown",
     packages=[cli_name, f"{cli_name}.commands", f"{cli_name}.utils"],
     keywords=[name, cli_name],
-    python_requires="<=3.9>=3.6",
+    python_requires=">=3.6",
     license="MIT",
     install_requires=required,
     entry_points=f"[console_scripts]\n{cli_name}={cli_name}.__main__:main",
