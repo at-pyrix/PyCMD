@@ -122,14 +122,8 @@ Here are some ways you can help:
 
 
 ### Contributers:
-. 　　　。　　　　•　 　ﾟ　　。 　　.<br>
-
-.　　 。　　　　　  。 . 　　 • 　　　　•<br>
-
- . 　**Hey look, you could be the first one!**　 。<br>
-
-　　ﾟ　　　.　　　. ,　　　　.　 .<br>
-  .　　　 　　.　　　　　。　　 。　. 　
+<!-- get a round image -->
+[![](https://images.weserv.nl/?url=avatars.githubusercontent.com/u/58365481?s=50&v=4&mask=circle&fit=cover)](](https://github.com/Domin8668))
 
 
 ## License 🔑
