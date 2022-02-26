@@ -22,7 +22,8 @@
 		"name": "rm",
 		"description": "Remove a project",
 		"usage": "rm [project_name]",
-		"example": "pycmd rm minecraft.java"
+		"example": "pycmd rm minecraft.java",
+		"flags": "-y (no prompt)"
 	},
 	{
 		"name": "open",

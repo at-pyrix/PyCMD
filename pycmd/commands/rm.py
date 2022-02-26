@@ -113,22 +113,19 @@ def delete_project(project_name):
             + f"Please add the path to the config.json file or run the {fc.CYAN}pycmd setup projects{fc.RESET} command.\n"
         )
         return
-
+    
     if os.path.exists(f"{root_folder}/{project_name}"):
-        print(
-            f"{bg.LIGHTBLUE_EX}{fc.BLACK}CONFIRM{fc.RESET}{bg.RESET} "
-            + f'This will delete all the contents of {fc.LIGHTBLACK_EX}"{fc.CYAN}{project}{fc.LIGHTBLACK_EX}"{fc.RESET} Are you sure? [y/N]'
-        )
+        if not bypass_prompt:
+            print(
+                f"{bg.LIGHTBLUE_EX}{fc.BLACK}CONFIRM{fc.RESET}{bg.RESET} "
+                + f'This will delete all the contents of {fc.LIGHTBLACK_EX}"{fc.CYAN}{project}{fc.LIGHTBLACK_EX}"{fc.RESET} Are you sure? [y/N]'
+            )
 
-        if input(f"{fc.CYAN}» {fc.GREEN}").lower() != "y":
-            return
+            if input(f"{fc.CYAN}» {fc.GREEN}").lower() != "y":
+                return
 
         try:
             shutil.rmtree(f"{root_folder}/{project_name}")
-
-        except PermissionError:
-            print(bg.RED + "ERR" + bg.RESET + " " + "Project is currently in use\n")
-            return
         
         except Exception as e:
             print(bg.RED + "ERR" + bg.RESET + " " + f"{str(e)}\n")
@@ -166,6 +163,8 @@ def delete_git(project_name):
             print(
                 f'\n{fc.GREEN}Deleted {fc.LIGHTBLACK_EX}"{fc.CYAN}{project_name}{fc.LIGHTBLACK_EX}"{fc.RESET} from GitHub.\n'
             )
+
+bypass_prompt = True if '-y' in flags else False
 
 if language == 'git':
     delete_git(project)

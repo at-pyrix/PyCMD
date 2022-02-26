@@ -105,9 +105,9 @@ def projects_setup():
 
     print(fc.LIGHTWHITE_EX + "\nDo you organize your projects in folders? (Y/n)")
     print(fc.CYAN + "» " + fc.CYAN, end="")
-    key = getch()
+    key = getch().lower()
 
-    if key == b"\x03":
+    if key == b"\x03": # ^C
         raise KeyboardInterrupt
 
     elif key == b"y":
@@ -270,6 +270,7 @@ def editor_setup():
         "GNU Nano",
         "GNU Emacs",
         "Visual Studio Code",
+        "PyCharm"
         "Sublime Text",
         "Atom",
         "Other",

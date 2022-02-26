@@ -1,6 +1,40 @@
+from asyncore import write
 import sys
 import wx
 from difflib import SequenceMatcher
+from colorama import Fore as fc, Back as bg, Style as st, init
+from subprocess import run
+init(autoreset=True)
+
+def execute(command, exit=False, rewrite=False):
+    
+    """
+    ### Shell Commands Executer
+    
+    Silently executes a command and handles the errors.
+    If the command fails to run, logs the error message and returns `None`
+    Else returns the output of the command 
+    
+    If `exit` is `True`, exists the program if an error occurs
+    
+    `rewrite` will print with `\\r` instead of `\\n`
+    """
+    
+    output = run(command, shell=True, capture_output=True)
+    
+    if output.returncode == 0:
+        return output.stdout.decode('utf-8')
+    else:
+        if rewrite:
+            print('\n' + bg.YELLOW + fc.BLACK + 'LOG' + fc.RESET + bg.RESET + ' ' + f'While executing: {fc.CYAN}"' + command + f'"{fc.RESET}: \n')
+        else:
+            print('\r' + bg.YELLOW + fc.BLACK + 'LOG' + fc.RESET + bg.RESET + ' ' + f'While executing: {fc.CYAN}"' + command + f'"{fc.RESET}: \n')
+        print(bg.RED + 'ERR' + bg.RESET +
+              ' ' + output.stderr.decode('utf-8') + " " * 20)
+        if exit:
+            sys.exit(1)
+            
+        return None
 
 def autocorrect(word: str, word_list: list[str], tolerance: float = 0.6, return_none=True) -> str:
     """
