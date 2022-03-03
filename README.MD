@@ -157,7 +157,7 @@ SOFTWARE.
 ## FAQs:
 
 - Why did you name it **Py**CMD? 
->  ¯\\_\(ツ\)\_\/¯, but I think it's an **ok** name. Also `Py` represents the Python language in which PYCMD was written. Not the best name, but i'm bad at keeping names. 
+>  ¯\\_\(ツ\)\_\/¯, but I think it's an **ok** name. Also `Py` represents the Python language in which PYCMD was written. Not the best name, i'm bad at keeping names. 
 
 - Why should I use PyCMD?
 > PyCMD saves you a lot of time, you can use it to manage your projects if they are messy or if you want to make a lot of changes in short time. Not only that but also it will help you to make your projects more readable and maintainable.
