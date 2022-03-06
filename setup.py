@@ -2,7 +2,7 @@ import setuptools
 
 name = "pycmd-cli"
 description = "PyCmd is a command-line tool to help you manage your projects."
-version = '1.0.3'
+version = '1.0.4'
 readme = open("README.md", "r", encoding="utf8").read()
 cli_name = "pycmd"
 

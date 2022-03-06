@@ -270,7 +270,7 @@ def editor_setup():
         "GNU Nano",
         "GNU Emacs",
         "Visual Studio Code",
-        "PyCharm"
+        "PyCharm",
         "Sublime Text",
         "Atom",
         "Other",

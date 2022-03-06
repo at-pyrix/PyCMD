@@ -24,7 +24,7 @@ try:
 except FileNotFoundError:
     config = {'is_setup': False}
 
-__setup_done__ = config['is_setup']
+is_setup = config['is_setup']
 
 
 setup = f"""
@@ -43,7 +43,7 @@ Github: {fc.LIGHTBLUE_EX}https://www.github.com/Yasho022/pycmd{fc.RESET}
 {fc.LIGHTBLACK_EX}$ {fc.BLUE}pycmd {fc.RESET}setup{fc.RESET}
 """
 
-if not __setup_done__ and not "-help" in argv:
+if not is_setup and not "-help" in argv:
     print(setup)
     exit(0)
 
@@ -59,37 +59,20 @@ print(f"""
 file = open('json/commands.json', 'r')
 commands_data = json.load(file)
 
-print(fc.MAGENTA + "┌" + "─"*28 + "┬" + "─"*45 + "┐")
-print(f"{fc.MAGENTA}│{fc.YELLOW}{'Commands'.center(28, ' ')}{fc.MAGENTA}│{fc.YELLOW}{'Description'.center(42, ' ')}{fc.MAGENTA}{' '*3}│")
-
-print(fc.MAGENTA + "└" + "─"*28 + "┴" + "─"*45 + "┘")
-
-"""
-┌────────────────────────────┬─────────────────────────────────────────────┐
-│          Commands          │               Description                   │
-└────────────────────────────┴─────────────────────────────────────────────┘
-"""
+print(fc.CYAN + '\nCOMMANDS\n')
 
 print(fc.LIGHTBLACK_EX + "┌" + "─"*28 + "┬" + "─"*45 + "┐")
-for i in commands_data:
+
+for c, i in enumerate(commands_data):
     name_center = i['name'].center(27, ' ')
     description_center = i['description'].center(39, ' ')
     print(
-        f"{fc.LIGHTBLACK_EX}│{fc.LIGHTBLUE_EX}{name_center} {fc.LIGHTBLACK_EX}│  {fc.GREEN}{description_center}    {fc.LIGHTBLACK_EX}│")
-print(fc.LIGHTBLACK_EX + "└" + "─"*28 + "┴" + "─"*45 + "┘")
-
-"""
-┌────────────────────────────┬─────────────────────────────────────────────┐
-│           command1         │                description1                 │
-│           command2         │                description2                 │
-│           command3         │                description3                 │
-│           command4         │                description4                 │
-│           command5         │                description5                 │
-│           command6         │                description6                 │
-│           command7         │                description7                 │
-│           command8         │                description8                 │
-└────────────────────────────┴─────────────────────────────────────────────┘
-"""
+        f"{fc.LIGHTBLACK_EX}│{fc.YELLOW}{name_center} {fc.LIGHTBLACK_EX}│  {fc.LIGHTMAGENTA_EX}{description_center}    {fc.LIGHTBLACK_EX}│")
+    
+    if c == len(commands_data) - 1:
+        print(fc.LIGHTBLACK_EX + "└" + "─"*28 + "┴" + "─"*45 + "┘")
+    else:
+        print(fc.LIGHTBLACK_EX + "├" + "─"*28 + "┼" + "─"*45 + "┤")
 
 print("\nFor more information on a specific command, type:")
-print(f"{fc.LIGHTBLACK_EX}${fc.GREEN} pycmd{fc.LIGHTBLUE_EX} help {fc.RESET}<command>")
+print(f"{fc.LIGHTBLACK_EX}${fc.GREEN} pycmd{fc.LIGHTBLUE_EX} help {fc.GREEN}<command>")
