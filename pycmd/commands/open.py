@@ -20,7 +20,7 @@ argument, flags = argparse(sys.argv)
 
 if "." not in argument:
     argument = 'untitled.unknown'
-project_name = re.sub('\W|^(?=\d)', '_', argument.split('.')[0])
+project_name = argument.split('.')[0]
 
 if '.py' in argument:
     language = 'python'

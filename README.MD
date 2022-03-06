@@ -65,6 +65,15 @@ pycmd setup
   ```console
   pycmd setup
   ```
+
+>  You can manually config the settings by editing the `config.json` file.
+>  To do so, run:
+>  ```console
+>  pycmd src
+>  ```
+>  This will open the source code of pycmd. You can edit the config file located in `json/config.json` 
+
+
 ### Requirements
 > ⚠️ Doesn't work on Python 3.10 yet
 - [Python 3.6+ (Tested on 3.9.9)](https://www.python.org/downloads/) 

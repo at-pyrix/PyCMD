@@ -341,7 +341,7 @@ if language == "web":
     open("style.css", "w").close()
 
 elif language == "rust":
-    execute(f"cargo new {project_name}", True)
+    execute(f"cargo new .", True)
 
 elif language == "node.js":
     with open(f"index.js", "w") as file:
