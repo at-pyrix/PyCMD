@@ -17,7 +17,8 @@
 
 ## What is PyCMD?
 
-PyCmd is a **command-line tool** to help you **manage** your **projects**. It saves you a lot of clicks. It's **simple** and **easy** to use. Interesting? [Give it a try](#installation)
+PyCmd is a **command-line tool** to help you **manage** your **projects**. It saves you a lot of clicks. It's **simple** and **easy** to use. 
+Sounds Interesting? [Give it a try](#installation)
 
 
 ### Why PyCMD?
@@ -199,6 +200,8 @@ If you encounter any problems feel free to [Contact me](#contact-me-)
 *I heard that emojis attract attention, that's why I used them. Really sorry if you hate them, I hate them too. (i too have an official rivalry towards those yellow circles)*
 
 Inspired by npm and heroku cli
+
+**As of now, this project is discontinued.**
 
 ### Contact Me 💌
           
