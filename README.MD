@@ -109,8 +109,8 @@ $ pycmd <command> <parameter> -<flags>
 ```
 
 Example:
-```powershell
-pycmd create hello_world.py -private -y
+```bash
+pycmd create hello_world.py --private -y
 # Creates a new python project
 ```
 
