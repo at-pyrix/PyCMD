@@ -28,7 +28,7 @@ PYCMD helps you create, manage and do cool stuff with your projects super-fast â
 
 ![](./images/Comparision-low.gif)
 
-*forgive me for the **hamburger***
+*kindly forgive me for the **forced "comedy"***
 
 
 ## Installation:
@@ -183,8 +183,9 @@ SOFTWARE.
 > | Light (Doesn't take too much space) |
 
 
-- Does PyCMD collect any user data?
-> No, PyCMD doesn't collect any user data. It stores the configuration in your local storage in the file `json/config.json`.
+- Where are the configs?
+> All the configurations are stored in your local storage in the file `{pycmd-directory}/json/config.json`.
+> You can run the command `pycmd src` to open the PyCMD folder with your text editor. You can edit the configs there itself.
 
 - How do you contribute to PyCMD?
 > You can contribute to PyCMD by [opening an issue](https://www.github.com/Yasho022/PyCMD/issues) or by a [pull request](https://www.github.com/Yasho022/PyCMD/fork). 
@@ -195,17 +196,12 @@ SOFTWARE.
 
 If you encounter any problems feel free to [Contact me](#contact-me-)
 
-*I heard that emojis attract attention, that's why I used them. Really sorry if you hate them, I hate them too. (i have an official rivalry towards yellow circles)*
+*I heard that emojis attract attention, that's why I used them. Really sorry if you hate them, I hate them too. (i too have an official rivalry towards those yellow circles)*
 
-*inspired by npm and heroku cli*
+Inspired by npm and heroku cli
 
 ### Contact Me ðŸ’Œ
           
-<a href = "https://www.reddit.com/user/Yasho022" target="_blank">
- <img src="https://img.shields.io/badge/NotYasho-ff4803?style=for-the-badge&amp;logo=reddit&amp;logoColor=white" alt = "Reddit" title="Reddit">
-<a href = "https://discord.com/users/875991927210786848">
-  <img src="https://img.shields.io/badge/NotYasho-6f42f5?style=for-the-badge&amp;logo=discord&amp;logoColor=white" alt = "Discord" title="Discord">
-
-<a href = "mailto:wiredhack022@gmail.com" target="_blank">
-<img src="https://img.shields.io/badge/wiredhack022@gmail.com-f5d742?style=for-the-badge&amp;logo=gmail&amp;logoColor=black" alt="Mail" title="Mail">
+<a href = "mailto:probablynotyasho@gmail.com" target="_blank">
+<img src="https://img.shields.io/badge/probablynotyasho@gmail.com-f5d742?style=for-the-badge&amp;logo=gmail&amp;logoColor=black" alt="Mail" title="Mail">
 </a>
